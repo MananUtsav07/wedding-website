@@ -57,37 +57,37 @@ export const professionals = [
 
 export const galleryShots = [
   {
-    title: 'Pine Trail Promise',
+    title: 'sample',
     location: 'Shimla',
     mediaKey: 'gallery-shimla-1',
   },
   {
-    title: 'Cedar Hill Romance',
+    title: 'sample',
     location: 'Shimla',
     mediaKey: 'gallery-shimla-2',
   },
   {
-    title: 'Royal Courtyard Story',
+    title: 'sample',
     location: 'Amritsar',
     mediaKey: 'gallery-amritsar-1',
   },
   {
-    title: 'Golden Temple Glow',
+    title: 'sample',
     location: 'Amritsar',
     mediaKey: 'gallery-amritsar-2',
   },
   {
-    title: 'Lakefront Vows',
+    title: 'sample',
     location: 'Srinagar',
     mediaKey: 'gallery-srinagar-1',
   },
   {
-    title: 'Shikara Silhouette',
+    title: 'sample',
     location: 'Srinagar',
     mediaKey: 'gallery-srinagar-2',
   },
   {
-    title: 'Golden Hour Drift',
+    title: 'sample',
     location: 'Himachal',
     mediaKey: 'gallery-himachal-1',
   },

@@ -2,7 +2,7 @@ function Hero() {
   return (
     <section className="hero">
       <p className="eyebrow">Pre-Wedding Shoots Across North India</p>
-      <h1>Plan your couple shoot in Himachal, Punjab, and Jammu & Kashmir</h1>
+      <h1>Make your pre-wedding photos look straight out of your wedding album</h1>
       <p>
         Discover verified photographers, browse real shoot inspiration, pick available slots, and
         move forward with payment-ready booking details.

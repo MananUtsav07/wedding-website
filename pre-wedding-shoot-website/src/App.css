@@ -15,7 +15,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.9rem;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: #fff7f3;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: linear-gradient(130deg, #b2452f, #d97747);
+  box-shadow: 0 8px 14px rgba(133, 56, 32, 0.24);
 }
 
 .brand {
@@ -37,7 +56,7 @@
 .nav-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
 
 .nav-link {
@@ -61,6 +80,63 @@
   background: linear-gradient(120deg, #b0452f, #cf6f3f);
   border-color: #b0452f;
   color: #fffaf5;
+}
+
+.nav-cta {
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.48rem 0.92rem;
+  color: #fff9f4;
+  border: 1px solid #a63d2b;
+  background: linear-gradient(120deg, #9f3c2d, #c75f3a);
+  font-weight: 600;
+  box-shadow: 0 8px 14px rgba(127, 48, 25, 0.22);
+}
+
+.site-footer {
+  width: min(1120px, 100% - 2rem);
+  margin: 0 auto 2rem;
+  border-radius: 24px;
+  border: 1px solid #e8c3b4;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255, 214, 190, 0.2), transparent 28%),
+    linear-gradient(140deg, #fff9f4, #fff1e8);
+  box-shadow: 0 12px 26px rgba(144, 71, 43, 0.12);
+  padding: 1.3rem 1.4rem 1rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1.1fr;
+  gap: 1rem;
+}
+
+.footer-grid h3,
+.footer-grid h4 {
+  margin: 0 0 0.45rem;
+  color: #832f28;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.footer-grid p,
+.footer-grid a {
+  margin: 0 0 0.35rem;
+  color: #875844;
+  text-decoration: none;
+  font-size: 0.93rem;
+  display: block;
+}
+
+.footer-grid a:hover {
+  color: #9d432e;
+}
+
+.footer-copy {
+  margin: 0.8rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid #edd3c8;
+  color: #9c6b54;
+  font-size: 0.86rem;
 }
 
 .page {
@@ -468,8 +544,22 @@
 
 @media (max-width: 860px) {
   .topbar {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    justify-content: center;
+  }
+
+  .nav-cta {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .hero {
@@ -486,5 +576,11 @@
 
   .booking-form button {
     grid-column: span 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
   }
 }

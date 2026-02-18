@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import SiteFooter from './SiteFooter'
 
 const links = [
   { label: 'Home', path: '/' },
@@ -11,9 +12,14 @@ function AppLayout() {
   return (
     <div className="site-shell">
       <header className="topbar">
-        <div className="brand">
-          <strong>pre-wedding-shoot</strong>
-          <span>Pre-Wedding Platform</span>
+        <div className="brand-wrap">
+          <div className="brand-mark" aria-hidden="true">
+            SW
+          </div>
+          <div className="brand">
+            <strong>samplewebname</strong>
+            <span>Pre-Wedding Platform</span>
+          </div>
         </div>
         <nav className="nav-links" aria-label="Main navigation">
           {links.map((link) => (
@@ -27,9 +33,13 @@ function AppLayout() {
             </NavLink>
           ))}
         </nav>
+        <NavLink to="/booking" className="nav-cta">
+          Book Now
+        </NavLink>
       </header>
 
       <Outlet />
+      <SiteFooter />
     </div>
   )
 }
