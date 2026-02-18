@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="Wedding photo placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f8d7c4"/>
+      <stop offset="55%" stop-color="#f2bda4"/>
+      <stop offset="100%" stop-color="#d98f78"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="220" cy="160" r="110" fill="#ffffff" opacity="0.2"/>
+  <circle cx="1030" cy="660" r="140" fill="#ffffff" opacity="0.15"/>
+  <path d="M170 640C300 500 450 520 600 620C730 700 900 700 1030 610" fill="none" stroke="#fff7f0" stroke-width="16" opacity="0.65"/>
+  <text x="600" y="375" text-anchor="middle" font-size="56" font-family="Georgia, serif" fill="#fff8f3">Pre-Wedding Moments</text>
+  <text x="600" y="435" text-anchor="middle" font-size="28" font-family="Segoe UI, Arial, sans-serif" fill="#fff8f3">Sample Image</text>
+</svg>
