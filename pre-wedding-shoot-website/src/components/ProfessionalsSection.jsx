@@ -28,17 +28,17 @@ function ProfessionalsSection({ professionals }) {
       <p className="section-subtitle">Trusted teams for cinematic, traditional, and editorial shoots.</p>
       <div className="grid three professionals-grid">
         {professionals.map((pro) => (
-          <article className="professional-card" key={pro.name}>
+          <article className="professional-card" key={pro.id}>
             <SafeImage src={photoUrls[pro.id]} alt={pro.name} />
             <div className="professional-content">
               <h3>{pro.name}</h3>
               <p>{pro.type}</p>
               <div className="professional-tags">
                 <span>{pro.city}</span>
-                <span>{pro.specialty}</span>
+                {pro.specialty ? <span>{pro.specialty}</span> : null}
               </div>
-              <div className="meta">Rating: {pro.rating} / 5</div>
-              <div className="meta">Completed Shoots: {pro.shoots}+</div>
+              <div className="meta">Rating: {pro.rating}</div>
+              <div className="meta">Completed Shoots: {pro.shoots}</div>
             </div>
           </article>
         ))}

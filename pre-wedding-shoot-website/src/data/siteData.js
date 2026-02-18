@@ -25,32 +25,32 @@ export const locations = [
 export const professionals = [
   {
     id: 'snowframe',
-    name: 'Snowframe Studios',
+    name: 'Sample Studio',
     type: 'Photography Company',
     city: 'Shimla',
-    rating: '4.9',
-    shoots: 240,
-    specialty: 'Mountain Storytelling',
+    rating: '-',
+    shoots: '-',
+    
     profileMediaKey: 'professional-snowframe-profile',
   },
   {
     id: 'lenssaga',
-    name: 'LensSaga by Arjun',
-    type: 'Registered Photographer',
+    name: 'Sample Studio',
+    type: 'Photography Company',
     city: 'Amritsar',
-    rating: '4.8',
-    shoots: 160,
-    specialty: 'Royal & Heritage Frames',
+    rating: '-',
+    shoots: '-',
+  
     profileMediaKey: 'professional-lenssaga-profile',
   },
   {
     id: 'meadowmotion',
-    name: 'Meadow Motion Films',
-    type: 'Cinematic Team',
+    name: 'Sample Studio',
+   type: 'Photography Company',
     city: 'Srinagar',
-    rating: '4.9',
-    shoots: 190,
-    specialty: 'Cinematic Lakefront Films',
+    rating: '-',
+    shoots: '-',
+    
     profileMediaKey: 'professional-meadowmotion-profile',
   },
 ]
