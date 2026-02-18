@@ -1,16 +1,36 @@
-# React + Vite
+# Pre-Wedding Shoot Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for a pre-wedding discovery and booking platform.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## GitHub Pages deployment
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+This repo is configured to deploy automatically using GitHub Actions.
 
-## Expanding the ESLint configuration
+### 1) Push to GitHub
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Create a repository and push this project to the `main` branch.
+
+### 2) Enable GitHub Pages
+
+In your GitHub repository:
+
+1. Go to `Settings` -> `Pages`
+2. Under `Build and deployment`, set `Source` to `GitHub Actions`
+
+### 3) Deploy
+
+Push to `main` (or run the workflow manually from `Actions` tab).
+
+After workflow success, GitHub will provide a live URL you can share.
+
+## Notes
+
+- Routing uses `HashRouter` so deep links work correctly on GitHub Pages.
+- `vite.config.js` uses `base: './'` for portable static hosting.
