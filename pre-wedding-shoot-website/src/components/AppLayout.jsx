@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import SiteFooter from './SiteFooter'
 
@@ -5,10 +6,13 @@ const links = [
   { label: 'Home', path: '/' },
   { label: 'Professionals', path: '/professionals' },
   { label: 'Gallery', path: '/gallery' },
-  { label: 'Booking', path: '/booking' },
 ]
 
 function AppLayout() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const closeMenu = () => setIsMenuOpen(false)
+
   return (
     <div className="site-shell">
       <header className="topbar">
@@ -21,19 +25,35 @@ function AppLayout() {
             <span>Pre-Wedding Platform</span>
           </div>
         </div>
-        <nav className="nav-links" aria-label="Main navigation">
+
+        <button
+          type="button"
+          className="menu-toggle"
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          <span className="menu-icon" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+
+        <nav className={`nav-links ${isMenuOpen ? 'open' : ''}`} aria-label="Main navigation">
           {links.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               end={link.path === '/'}
               className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+              onClick={closeMenu}
             >
               {link.label}
             </NavLink>
           ))}
         </nav>
-        <NavLink to="/booking" className="nav-cta">
+        <NavLink to="/booking" className="nav-cta" onClick={closeMenu}>
           Book Now
         </NavLink>
       </header>
