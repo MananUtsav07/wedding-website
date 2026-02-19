@@ -25,6 +25,18 @@ const mediaLibrary = {
     'https://statetimes.in/wp-content/uploads/2025/04/Mansarfff.jpg',
   'location-sanasar-cover':
     'https://s7ap1.scene7.com/is/image/incredibleindia/sanasar-patnitop-jammu-&-kashmir-4-attr-hero?qlt=82&ts=1727353656438',
+  'professional-arjun-sharma':
+    'https://images.unsplash.com/photo-1591389703636-e15a1cc1d64f?auto=format&fit=crop&w=900&q=80',
+  'professional-priya-kapoor':
+    'https://images.unsplash.com/photo-1610041321327-b7941c8f5d68?auto=format&fit=crop&w=900&q=80',
+  'professional-vikram-singh':
+    'https://images.unsplash.com/photo-1621784563330-caee0b138a00?auto=format&fit=crop&w=900&q=80',
+  'professional-saira-khan':
+    'https://images.unsplash.com/photo-1595064085577-7c2ef98ec311?auto=format&fit=crop&w=900&q=80',
+  'professional-rohan-mehra':
+    'https://images.unsplash.com/photo-1624298357597-fd92dfbec01d?auto=format&fit=crop&w=900&q=80',
+  'professional-anjali-verma':
+    'https://images.unsplash.com/photo-1609252509102-aa73ff792667?auto=format&fit=crop&w=900&q=80',
 
   'gallery-shimla-1':
     'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1400&q=80',
@@ -74,7 +86,7 @@ export async function fetchLocationCoverUrls(locations) {
 
 export async function fetchProfessionalPhotoUrls(professionals) {
   const pairs = await Promise.all(
-    professionals.map(async (pro) => [pro.id, await fetchMediaUrlByKey(pro.profileMediaKey)]),
+    professionals.map(async (pro) => [pro.id, samplePhoto]),
   )
   return Object.fromEntries(pairs)
 }

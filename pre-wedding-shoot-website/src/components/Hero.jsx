@@ -1,20 +1,24 @@
+import { Link } from 'react-router-dom'
+
 function Hero() {
   return (
     <section className="hero">
-      <div className="hero-garland" aria-hidden="true" />
-
       <div className="hero-inner">
         <div className="hero-text">
-          <p className="eyebrow">Pre-Wedding Shoots Across North India</p>
-          <h1>Make your pre-wedding moments feel cinematic and unforgettable</h1>
+          <p className="eyebrow">Handpicked Pre-Wedding Experiences</p>
+          <h1>
+            Capture Your <em>Love Story</em>
+          </h1>
           <p>
-            Discover verified photographers, browse real shoot inspiration, pick available slots,
-            and move forward with payment-ready booking details.
+            Handpicked photographers for your most cherished moments in breathtaking landscapes.
           </p>
-          <div className="hero-tags">
-            <span>Verified Professionals</span>
-            <span>Curated Locations</span>
-            <span>Slot-Based Booking</span>
+          <div className="hero-actions">
+            <Link to="/professionals" className="hero-btn hero-btn-primary">
+              Explore Professionals
+            </Link>
+            <Link to="/gallery" className="hero-btn hero-btn-secondary">
+              View Gallery
+            </Link>
           </div>
         </div>
       </div>

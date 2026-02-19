@@ -3,9 +3,9 @@ import { NavLink, Outlet } from 'react-router-dom'
 import SiteFooter from './SiteFooter'
 
 const links = [
-  { label: 'Home', path: '/' },
-  { label: 'Professionals', path: '/professionals' },
-  { label: 'Gallery', path: '/gallery' },
+  { id: 'home', label: 'Home', path: '/' },
+  { id: 'photographers', label: 'Photographers', path: '/professionals' },
+  { id: 'gallery', label: 'Gallery', path: '/gallery' },
 ]
 
 function AppLayout() {
@@ -43,7 +43,7 @@ function AppLayout() {
         <nav className={`nav-links ${isMenuOpen ? 'open' : ''}`} aria-label="Main navigation">
           {links.map((link) => (
             <NavLink
-              key={link.path}
+              key={link.id}
               to={link.path}
               end={link.path === '/'}
               className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}

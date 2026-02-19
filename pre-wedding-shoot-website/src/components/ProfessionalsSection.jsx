@@ -4,6 +4,11 @@ import SafeImage from './SafeImage'
 
 function ProfessionalsSection({ professionals }) {
   const [photoUrls, setPhotoUrls] = useState({})
+  const [selectedLocation, setSelectedLocation] = useState('All Locations')
+  const [selectedStyle, setSelectedStyle] = useState('All Styles')
+  const [selectedPrice, setSelectedPrice] = useState('Any Price')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [visibleCount, setVisibleCount] = useState(6)
 
   useEffect(() => {
     let mounted = true
@@ -22,27 +27,90 @@ function ProfessionalsSection({ professionals }) {
     }
   }, [professionals])
 
+  const locationOptions = ['All Locations', ...new Set(professionals.map((pro) => pro.city))]
+  const styleOptions = ['All Styles', ...new Set(professionals.map((pro) => pro.style))]
+  const priceOptions = ['Any Price', ...new Set(professionals.map((pro) => pro.priceRange))]
+
+  const filteredProfessionals = professionals.filter((pro) => {
+    const matchesLocation = selectedLocation === 'All Locations' || pro.city === selectedLocation
+    const matchesStyle = selectedStyle === 'All Styles' || pro.style === selectedStyle
+    const matchesPrice = selectedPrice === 'Any Price' || pro.priceRange === selectedPrice
+    const query = searchTerm.trim().toLowerCase()
+    const matchesSearch =
+      !query ||
+      pro.name.toLowerCase().includes(query) ||
+      pro.type.toLowerCase().includes(query) ||
+      pro.locationLabel.toLowerCase().includes(query)
+    return matchesLocation && matchesStyle && matchesPrice && matchesSearch
+  })
+
+  const displayedProfessionals = filteredProfessionals.slice(0, visibleCount)
+  const canLoadMore = displayedProfessionals.length < filteredProfessionals.length
+
+  const clearFilters = () => {
+    setSelectedLocation('All Locations')
+    setSelectedStyle('All Styles')
+    setSelectedPrice('Any Price')
+    setSearchTerm('')
+    setVisibleCount(6)
+  }
+
   return (
     <section className="section professional-section">
-      <h2>Registered Photographers & Companies</h2>
-      <p className="section-subtitle">Trusted teams for cinematic, traditional, and editorial shoots.</p>
-      <div className="grid three professionals-grid">
-        {professionals.map((pro) => (
+      <div className="pros-filter-bar">
+        <div className="pros-filter-group">
+          <select value={selectedLocation} onChange={(event) => setSelectedLocation(event.target.value)}>
+            {locationOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+          <select value={selectedStyle} onChange={(event) => setSelectedStyle(event.target.value)}>
+            {styleOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+          <select value={selectedPrice} onChange={(event) => setSelectedPrice(event.target.value)}>
+            {priceOptions.map((option) => (
+              <option key={option}>{option}</option>
+            ))}
+          </select>
+          <button type="button" className="clear-filter-btn" onClick={clearFilters}>
+            Clear All
+          </button>
+        </div>
+
+        <input
+          className="pros-search"
+          placeholder="Search by name or style..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+      </div>
+
+      <div className="pros-cards-grid">
+        {displayedProfessionals.map((pro) => (
           <article className="professional-card" key={pro.id}>
+            {pro.featured ? <span className="pro-badge">Premier Partner</span> : null}
             <SafeImage src={photoUrls[pro.id]} alt={pro.name} />
             <div className="professional-content">
               <h3>{pro.name}</h3>
               <p>{pro.type}</p>
-              <div className="professional-tags">
-                <span>{pro.city}</span>
-                {pro.specialty ? <span>{pro.specialty}</span> : null}
-              </div>
-              <div className="meta">Rating: {pro.rating}</div>
-              <div className="meta">Completed Shoots: {pro.shoots}</div>
+              <div className="pro-location">{pro.locationLabel}</div>
+              <button type="button" className="pro-cta">
+                View Profile
+              </button>
             </div>
           </article>
         ))}
       </div>
+
+      {canLoadMore ? (
+        <div className="pros-load-more-wrap">
+          <button type="button" className="pros-load-more" onClick={() => setVisibleCount((prev) => prev + 4)}>
+            Load More Professionals
+          </button>
+        </div>
+      ) : null}
     </section>
   )
 }

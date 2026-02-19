@@ -24,9 +24,9 @@ function LocationsSection({ locations }) {
   }, [locations])
 
   return (
-    <section className="section location-section">
+    <section className="section location-section" id="destinations">
       <h2>Top Shoot Destinations</h2>
-      <p className="section-subtitle">Click a destination to view sample pre-wedding photos.</p>
+      <p className="section-subtitle">Click a destination to view matching location gallery.</p>
       <div className="grid three destination-grid">
         {locations.map((place, index) => (
           <Link
@@ -39,12 +39,7 @@ function LocationsSection({ locations }) {
               <SafeImage src={coverUrls[place.id]} alt={place.name} />
               <div className="destination-content">
                 <h3>{place.name}</h3>
-                <p>{place.vibe}</p>
-                <ul>
-                  {place.popular.map((spot) => (
-                    <li key={spot}>{spot}</li>
-                  ))}
-                </ul>
+                <p>{place.name.split(',')[1]?.trim() || 'North India'}</p>
               </div>
             </article>
           </Link>
