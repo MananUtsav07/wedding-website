@@ -1,16 +1,14 @@
 import { Link } from 'react-router-dom'
 
 function SiteFooter() {
-  const year = new Date().getFullYear()
-
   return (
     <footer className="site-footer">
       <div className="footer-grid">
         <section>
-          <h3>samplewebname</h3>
+          <h3>Pre & Wedding Shoot</h3>
           <p>
-            Creative pre-wedding planning for destination shoots, verified professionals, and easy
-            slot booking.
+            Creative planning for pre-wedding, wedding, and post-wedding destination shoots with
+            verified professionals.
           </p>
         </section>
 
@@ -18,6 +16,7 @@ function SiteFooter() {
           <h4>Explore</h4>
           <Link to="/">Home</Link>
           <Link to="/professionals">Professionals</Link>
+          <Link to="/destinations">Destinations</Link>
           <Link to="/gallery">Gallery</Link>
           <Link to="/booking">Booking</Link>
         </section>
@@ -31,12 +30,11 @@ function SiteFooter() {
 
         <section>
           <h4>Contact</h4>
-          <p>Email: hello@samplewebname.com</p>
+          <p>Email: hello@preandweddingshoot.com</p>
           <p>Phone: +91 98XXXXXX12</p>
           <p>Hours: 9:00 AM - 7:00 PM</p>
         </section>
       </div>
-      <p className="footer-copy">Copyright {year} samplewebname. All rights reserved.</p>
     </footer>
   )
 }

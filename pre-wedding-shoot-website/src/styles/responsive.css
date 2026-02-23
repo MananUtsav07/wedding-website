@@ -1,0 +1,149 @@
+@media (max-width: 860px) {
+  .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.7rem;
+    align-items: center;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .brand-wrap {
+    grid-column: 1 / 2;
+  }
+
+  .nav-links {
+    grid-column: 1 / 3;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    width: 100%;
+    padding-top: 0.45rem;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-link {
+    text-align: center;
+  }
+
+  .nav-cta {
+    grid-column: 1 / 3;
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero {
+    padding: 5.4rem 1.2rem 3.8rem;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-text {
+    padding-top: 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 9vw, 3.5rem);
+  }
+
+  .commitment-head {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .commitment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .itinerary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .destinations-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .destinations-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .destinations-page-head {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .destinations-filter-wrap {
+    min-width: min(100%, 300px);
+    width: 100%;
+  }
+
+  .pros-filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .pros-cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-summary-col {
+    position: static;
+  }
+
+  .booking-grid-two {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-progress {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .booking-step-line {
+    display: none;
+  }
+
+  .gallery-page {
+    padding: 1.8rem 1rem 2.2rem;
+  }
+
+  .gallery-masonry {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .destination-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pros-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-masonry {
+    grid-template-columns: 1fr;
+  }
+}

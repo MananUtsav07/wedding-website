@@ -5,6 +5,7 @@ import SiteFooter from './SiteFooter'
 const links = [
   { id: 'home', label: 'Home', path: '/' },
   { id: 'photographers', label: 'Photographers', path: '/professionals' },
+  { id: 'destinations', label: 'Destinations', path: '/destinations' },
   { id: 'gallery', label: 'Gallery', path: '/gallery' },
 ]
 
@@ -17,12 +18,8 @@ function AppLayout() {
     <div className="site-shell">
       <header className="topbar">
         <div className="brand-wrap">
-          <div className="brand-mark" aria-hidden="true">
-            SW
-          </div>
           <div className="brand">
-            <strong>samplewebname</strong>
-            <span>Pre-Wedding Platform</span>
+            <strong>Pre & Wedding Shoot</strong>
           </div>
         </div>
 

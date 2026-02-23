@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { motion as Motion } from 'framer-motion'
 import { fetchProfessionalPhotoUrls } from '../api/mediaApi'
 import SafeImage from './SafeImage'
 
@@ -88,8 +89,15 @@ function ProfessionalsSection({ professionals }) {
       </div>
 
       <div className="pros-cards-grid">
-        {displayedProfessionals.map((pro) => (
-          <article className="professional-card" key={pro.id}>
+        {displayedProfessionals.map((pro, index) => (
+          <Motion.article
+            className="professional-card"
+            key={pro.id}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.35, delay: index * 0.04 }}
+          >
             {pro.featured ? <span className="pro-badge">Premier Partner</span> : null}
             <SafeImage src={photoUrls[pro.id]} alt={pro.name} />
             <div className="professional-content">
@@ -100,7 +108,7 @@ function ProfessionalsSection({ professionals }) {
                 View Profile
               </button>
             </div>
-          </article>
+          </Motion.article>
         ))}
       </div>
 

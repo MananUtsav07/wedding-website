@@ -23,6 +23,8 @@ const mediaLibrary = {
     'https://s7ap1.scene7.com/is/image/incredibleindia/1-patnitop-jammu-city-hero?qlt=82&ts=1726729003276',
   'location-mansar-lake-cover':
     'https://statetimes.in/wp-content/uploads/2025/04/Mansarfff.jpg',
+  'location-mansar-cover':
+    'https://statetimes.in/wp-content/uploads/2025/04/Mansarfff.jpg',
   'location-sanasar-cover':
     'https://s7ap1.scene7.com/is/image/incredibleindia/sanasar-patnitop-jammu-&-kashmir-4-attr-hero?qlt=82&ts=1727353656438',
   'professional-arjun-sharma':

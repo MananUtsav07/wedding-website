@@ -1,14 +1,19 @@
+import { useEffect } from 'react'
 import Hero from '../components/Hero'
 import CommitmentSection from '../components/CommitmentSection'
-import LocationsSection from '../components/LocationsSection'
-import { locations } from '../data/siteData'
+import ItinerarySection from '../components/ItinerarySection'
+import { itineraryPackages } from '../data/siteData'
 
 function HomePage() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <main className="page">
       <Hero />
       <CommitmentSection />
-      <LocationsSection locations={locations} />
+      <ItinerarySection packages={itineraryPackages} />
     </main>
   )
 }
