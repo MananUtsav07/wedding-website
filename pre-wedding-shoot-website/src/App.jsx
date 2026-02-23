@@ -5,12 +5,14 @@ import BookingPage from './pages/BookingPage'
 import DestinationsPage from './pages/DestinationsPage'
 import GalleryPage from './pages/GalleryPage'
 import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
 import ProfessionalsPage from './pages/ProfessionalsPage'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<LoginPage />} />
         <Route element={<AppLayout />}>
           <Route index element={<HomePage />} />
           <Route path="professionals" element={<ProfessionalsPage />} />

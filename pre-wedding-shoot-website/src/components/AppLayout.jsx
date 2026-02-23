@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { getCurrentSession, hydrateSession, logoutAccount, subscribeToAuthChanges } from '../utils/authStorage'
 import SiteFooter from './SiteFooter'
 
 const links = [
@@ -10,9 +11,54 @@ const links = [
 ]
 
 function AppLayout() {
+  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [session, setSession] = useState(() => getCurrentSession())
+  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false)
+  const accountMenuRef = useRef(null)
 
-  const closeMenu = () => setIsMenuOpen(false)
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+    setIsAccountMenuOpen(false)
+  }
+
+  useEffect(() => {
+    const syncSession = () => setSession(getCurrentSession())
+
+    hydrateSession()
+    const unsubscribe = subscribeToAuthChanges()
+
+    window.addEventListener('auth-changed', syncSession)
+    window.addEventListener('storage', syncSession)
+    window.addEventListener('focus', syncSession)
+
+    return () => {
+      unsubscribe()
+      window.removeEventListener('auth-changed', syncSession)
+      window.removeEventListener('storage', syncSession)
+      window.removeEventListener('focus', syncSession)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (accountMenuRef.current && !accountMenuRef.current.contains(event.target)) {
+        setIsAccountMenuOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  }, [])
+
+  const handleSignOut = async () => {
+    await logoutAccount()
+    setIsAccountMenuOpen(false)
+    closeMenu()
+    navigate('/login')
+  }
+
+  const avatarLabel = (session?.fullName || session?.email || 'U').trim().charAt(0).toUpperCase()
 
   return (
     <div className="site-shell">
@@ -50,9 +96,37 @@ function AppLayout() {
             </NavLink>
           ))}
         </nav>
-        <NavLink to="/booking" className="nav-cta" onClick={closeMenu}>
-          Book Now
-        </NavLink>
+        <div className="topbar-actions">
+          {session ? (
+            <>
+              <NavLink to="/booking" className="nav-cta" onClick={closeMenu}>
+                Book Now
+              </NavLink>
+              <div className="account-menu-wrap" ref={accountMenuRef}>
+                <button
+                  type="button"
+                  className="account-avatar-btn"
+                  aria-haspopup="menu"
+                  aria-expanded={isAccountMenuOpen}
+                  onClick={() => setIsAccountMenuOpen((prev) => !prev)}
+                >
+                  {avatarLabel}
+                </button>
+                {isAccountMenuOpen ? (
+                  <div className="account-dropdown" role="menu">
+                    <button type="button" onClick={handleSignOut}>
+                      Sign Out
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            </>
+          ) : (
+            <NavLink to="/login" className="nav-cta" onClick={closeMenu}>
+              Login
+            </NavLink>
+          )}
+        </div>
       </header>
 
       <Outlet />

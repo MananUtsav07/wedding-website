@@ -36,10 +36,18 @@
     text-align: center;
   }
 
-  .nav-cta {
+  .topbar-actions {
     grid-column: 1 / 3;
     width: 100%;
+  }
+
+  .topbar-actions .nav-cta {
+    flex: 1;
     text-align: center;
+  }
+
+  .topbar-actions .account-menu-wrap {
+    flex: 0 0 auto;
   }
 
   .footer-grid {
