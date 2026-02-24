@@ -161,11 +161,12 @@
   margin-bottom: 0.5rem;
 }
 
-.package-preview img {
+.package-preview-thumb {
   width: 110px;
   height: 78px;
-  object-fit: cover;
   border-radius: 8px;
+  flex: 0 0 auto;
+  transition: background 0.35s ease;
 }
 
 .package-preview h3 {
@@ -192,6 +193,21 @@
   background: #dbeafe;
   color: #1152d4;
   font-weight: 700;
+}
+
+.other-event-field {
+  animation: booking-slide-down 0.24s ease-out;
+}
+
+@keyframes booking-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .booking-summary-col {

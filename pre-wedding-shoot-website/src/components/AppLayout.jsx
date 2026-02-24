@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { getCurrentSession, hydrateSession, logoutAccount, subscribeToAuthChanges } from '../utils/authStorage'
+import { getCurrentSession, hydrateSession, subscribeToAuthChanges } from '../utils/authStorage'
 import SiteFooter from './SiteFooter'
 
 const links = [
@@ -14,12 +14,9 @@ function AppLayout() {
   const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [session, setSession] = useState(() => getCurrentSession())
-  const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false)
-  const accountMenuRef = useRef(null)
 
   const closeMenu = () => {
     setIsMenuOpen(false)
-    setIsAccountMenuOpen(false)
   }
 
   useEffect(() => {
@@ -40,22 +37,9 @@ function AppLayout() {
     }
   }, [])
 
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (accountMenuRef.current && !accountMenuRef.current.contains(event.target)) {
-        setIsAccountMenuOpen(false)
-      }
-    }
-
-    document.addEventListener('mousedown', handleOutsideClick)
-    return () => document.removeEventListener('mousedown', handleOutsideClick)
-  }, [])
-
-  const handleSignOut = async () => {
-    await logoutAccount()
-    setIsAccountMenuOpen(false)
+  const handleOpenAccount = () => {
     closeMenu()
-    navigate('/login')
+    navigate('/account')
   }
 
   const avatarLabel = (session?.fullName || session?.email || 'U').trim().charAt(0).toUpperCase()
@@ -102,24 +86,9 @@ function AppLayout() {
               <NavLink to="/booking" className="nav-cta" onClick={closeMenu}>
                 Book Now
               </NavLink>
-              <div className="account-menu-wrap" ref={accountMenuRef}>
-                <button
-                  type="button"
-                  className="account-avatar-btn"
-                  aria-haspopup="menu"
-                  aria-expanded={isAccountMenuOpen}
-                  onClick={() => setIsAccountMenuOpen((prev) => !prev)}
-                >
-                  {avatarLabel}
-                </button>
-                {isAccountMenuOpen ? (
-                  <div className="account-dropdown" role="menu">
-                    <button type="button" onClick={handleSignOut}>
-                      Sign Out
-                    </button>
-                  </div>
-                ) : null}
-              </div>
+              <button type="button" className="account-avatar-btn" onClick={handleOpenAccount} aria-label="Open account">
+                {avatarLabel}
+              </button>
             </>
           ) : (
             <NavLink to="/login" className="nav-cta" onClick={closeMenu}>

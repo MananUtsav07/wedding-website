@@ -1,6 +1,39 @@
 import { motion as Motion } from 'framer-motion'
-import { useMemo, useState } from 'react'
-import samplePhoto from '../assets/fallback-photo.svg'
+import { useEffect, useMemo, useState } from 'react'
+
+const PACKAGE_MAP = {
+  'pre-wedding': {
+    title: 'Pre Wedding Shoot',
+    meta: '6 Hours • 2 Locations • 50 Edited Photos',
+    color: 'linear-gradient(135deg, #fed7aa, #fb923c)',
+    badges: ['Most Popular', 'Save 15%'],
+  },
+  wedding: {
+    title: 'Wedding Shoot',
+    meta: '12 Hours • Full Day • 200+ Edited Photos',
+    color: 'linear-gradient(135deg, #dbeafe, #3b82f6)',
+    badges: ['Best Value', 'Full Coverage'],
+  },
+  'post-wedding': {
+    title: 'Post Wedding Shoot',
+    meta: '4 Hours • 1 Location • 35 Edited Photos',
+    color: 'linear-gradient(135deg, #fde68a, #f59e0b)',
+    badges: ['Cinematic', 'Story Edit'],
+  },
+  'other-events': {
+    title: 'Other Events',
+    meta: 'Describe your event below for a custom quote',
+    color: 'linear-gradient(135deg, #e2e8f0, #94a3b8)',
+    badges: ['Custom', 'Quote Based'],
+  },
+}
+
+const OTHER_EVENT_PLACEHOLDERS = [
+  'Engagement celebration...',
+  'Retirement function...',
+  'Mundan ceremony...',
+  'Anniversary event...',
+]
 
 function getRecommendedProfessional(locationName, professionals) {
   const city = locationName.split(',')[0].trim().toLowerCase()
@@ -21,22 +54,70 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
     date: '',
     slot: slotMap[defaultLocation][0],
     photographer: 'recommended',
-    packageType: 'Pre Wedding Shoot',
+    packageType: 'pre-wedding',
+    otherEventDescription: '',
     paymentMethod: 'UPI',
     notes: '',
   })
+  const [otherTypingPlaceholder, setOtherTypingPlaceholder] = useState('')
 
   const availableSlots = useMemo(() => slotMap[form.location] ?? [], [form.location, slotMap])
+  const selectedPackage = useMemo(() => PACKAGE_MAP[form.packageType] ?? PACKAGE_MAP['pre-wedding'], [form.packageType])
   const recommendedProfessional = useMemo(
     () => getRecommendedProfessional(form.location, professionals),
     [form.location, professionals],
   )
+
+  useEffect(() => {
+    if (form.packageType !== 'other-events') {
+      return undefined
+    }
+
+    let wordIndex = 0
+    let charIndex = 0
+    let deleting = false
+    let timerId = 0
+
+    const tick = () => {
+      const currentWord = OTHER_EVENT_PLACEHOLDERS[wordIndex]
+      if (!deleting) {
+        charIndex += 1
+      } else {
+        charIndex -= 1
+      }
+
+      setOtherTypingPlaceholder(currentWord.slice(0, charIndex))
+
+      let speed = deleting ? 50 : 95
+
+      if (!deleting && charIndex === currentWord.length) {
+        deleting = true
+        speed = 1000
+      } else if (deleting && charIndex === 0) {
+        deleting = false
+        wordIndex = (wordIndex + 1) % OTHER_EVENT_PLACEHOLDERS.length
+        speed = 280
+      }
+
+      timerId = window.setTimeout(tick, speed)
+    }
+
+    timerId = window.setTimeout(tick, 220)
+    return () => window.clearTimeout(timerId)
+  }, [form.packageType])
 
   const onChange = (event) => {
     const { name, value } = event.target
     setForm((prev) => {
       if (name === 'location') {
         return { ...prev, location: value, slot: slotMap[value][0] }
+      }
+      if (name === 'packageType') {
+        return {
+          ...prev,
+          packageType: value,
+          otherEventDescription: value === 'other-events' ? prev.otherEventDescription : '',
+        }
       }
       return { ...prev, [name]: value }
     })
@@ -51,6 +132,7 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
 
     onConfirm({
       ...form,
+      packageType: selectedPackage.title,
       selectedProfessional,
       bookingId: `PW-${Date.now().toString().slice(-6)}`,
     })
@@ -194,24 +276,36 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
               <h2>Selected Package</h2>
             </div>
             <div className="package-preview">
-              <img src={samplePhoto} alt="Package preview" />
+              <div className="package-preview-thumb" style={{ background: selectedPackage.color }} aria-hidden="true" />
               <div>
-                <h3>{form.packageType}</h3>
-                <p>6 Hours • 2 Locations • 50 Edited Photos</p>
+                <h3>{selectedPackage.title}</h3>
+                <p>{selectedPackage.meta}</p>
                 <div className="package-badges">
-                  <span>Most Popular</span>
-                  <span>Save 15%</span>
+                  {selectedPackage.badges.map((badge) => (
+                    <span key={badge}>{badge}</span>
+                  ))}
                 </div>
               </div>
             </div>
             <label>
               Choose Package
               <select name="packageType" value={form.packageType} onChange={onChange}>
-                <option>Pre Wedding Shoot</option>
-                <option>Wedding Shoot</option>
-                <option>Post Wedding Shoot</option>
+                <option value="pre-wedding">Pre Wedding Shoot</option>
+                <option value="wedding">Wedding Shoot</option>
+                <option value="other-events">Other Events</option>
               </select>
             </label>
+            {form.packageType === 'other-events' ? (
+              <label className="other-event-field">
+                Event Description
+                <input
+                  name="otherEventDescription"
+                  value={form.otherEventDescription}
+                  onChange={onChange}
+                  placeholder={otherTypingPlaceholder || 'Describe your event...'}
+                />
+              </label>
+            ) : null}
             <label>
               Payment Mode
               <select name="paymentMethod" value={form.paymentMethod} onChange={onChange}>

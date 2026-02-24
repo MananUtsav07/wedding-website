@@ -6,7 +6,9 @@ import DestinationsPage from './pages/DestinationsPage'
 import GalleryPage from './pages/GalleryPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
+import MyBookingsPage from './pages/MyBookingsPage'
 import ProfessionalsPage from './pages/ProfessionalsPage'
+import UserAccountPage from './pages/UserAccountPage'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="gallery" element={<GalleryPage />} />
           <Route path="booking" element={<BookingPage />} />
+          <Route path="account" element={<UserAccountPage />} />
+          <Route path="my-bookings" element={<MyBookingsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
