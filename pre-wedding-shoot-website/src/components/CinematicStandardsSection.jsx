@@ -1,7 +1,67 @@
+import { useEffect, useState } from 'react'
 import { motion as Motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
+const studioTools = [
+  {
+    name: 'Canon EOS R5 C',
+    summary: '8K RAW capture with strong low-light detail for sharp cinematic portraits.',
+    specA: 'Cinema Sensor',
+    specB: '8K Recording',
+    image:
+      'https://images.unsplash.com/photo-1516724562728-afc824a36e84?auto=format&fit=crop&w=1200&q=80',
+    alt: 'Close-up of a professional camera body',
+  },
+  {
+    name: 'Master Prime Lens Set',
+    summary: 'Fast glass for clean bokeh, natural skin tones, and deep scene separation.',
+    specA: 'Wide Aperture',
+    specB: 'Prime Clarity',
+    image:
+      'https://images.unsplash.com/photo-1512790182412-b19e6d62bc39?auto=format&fit=crop&w=1200&q=80',
+    alt: 'Professional lenses arranged on a table',
+  },
+  {
+    name: 'DJI Ronin Stabilization',
+    summary: 'Fluid movement for walking shots, couple reveals, and motion-rich sequences.',
+    specA: '3-Axis Gimbal',
+    specB: 'Smooth Tracking',
+    image:
+      'https://images.unsplash.com/photo-1495707902641-75cac588d2e9?auto=format&fit=crop&w=1200&q=80',
+    alt: 'Gimbal setup for cinematic filming',
+  },
+  {
+    name: 'Color-Grade Workstation',
+    summary: 'Managed monitors and precision grading tools for a consistent final gallery look.',
+    specA: 'In-House Grading',
+    specB: 'Retouch QA',
+    image:
+      'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?auto=format&fit=crop&w=1200&q=80',
+    alt: 'Professional editing desk with calibrated screen',
+  },
+]
+
 function CinematicStandardsSection() {
+  const [activeToolIndex, setActiveToolIndex] = useState(0)
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setActiveToolIndex((currentIndex) => (currentIndex + 1) % studioTools.length)
+    }, 4200)
+
+    return () => window.clearInterval(intervalId)
+  }, [])
+
+  const activeTool = studioTools[activeToolIndex]
+
+  const goToPrevTool = () => {
+    setActiveToolIndex((currentIndex) => (currentIndex - 1 + studioTools.length) % studioTools.length)
+  }
+
+  const goToNextTool = () => {
+    setActiveToolIndex((currentIndex) => (currentIndex + 1) % studioTools.length)
+  }
+
   return (
     <section className="section studio-standard-section">
       <Motion.div
@@ -26,45 +86,40 @@ function CinematicStandardsSection() {
         >
           <div className="studio-feature-block">
             <h3>
-              <span className="studio-feature-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M3 9a2 2 0 0 1 2-2h1.12a2 2 0 0 0 1.66-.89l.82-1.22A2 2 0 0 1 10.27 4h3.46a2 2 0 0 1 1.67.89l.81 1.22A2 2 0 0 0 17.88 7H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Z"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                  />
-                  <circle cx="12" cy="13" r="3" stroke="currentColor" strokeWidth="1.8" />
-                </svg>
-              </span>
-              Best-in-Class Equipment
+              <span className="studio-feature-label">The Gear</span>
+              Full-frame cinema kit for texture-rich storytelling
             </h3>
             <p>
-              We use cinema-grade cameras and premium optics to preserve detail, color depth, and natural
-              emotion in every frame.
+              We deploy 8K cinema sensors paired with premium primes and stabilized camera rigs so every
+              frame keeps detail in attire, skin tone, and ambient light. From wide landscapes to close
+              expressions, our kit stays sharp, steady, and intentional.
             </p>
+            <div className="studio-feature-chips" aria-label="Primary gear">
+              <span>Cinema EOS Bodies</span>
+              <span>Master Prime Glass</span>
+              <span>Ronin 4D Movement</span>
+            </div>
           </div>
 
           <div className="studio-feature-block">
             <h3>
-              <span className="studio-feature-icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="m16.86 3.49 3.65 3.65m-2.03-5.03a2.55 2.55 0 1 1 3.61 3.6L7 20.82H3.4v-3.6L18.5 2.11Z"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                  />
-                </svg>
-              </span>
-              In-House Post-Production
+              <span className="studio-feature-label">The Edit</span>
+              In-house post team, one visual language from start to finish
             </h3>
             <p>
-              Our editors hand-grade and retouch each image with a consistent cinematic style to deliver a
-              polished story, not just isolated photos.
+              Our editors do not batch-fix images. They build your final story in stages: color grading,
+              skin-tone balancing, texture-safe retouching, and sequence review. Every gallery is finished
+              as a cohesive narrative, not just isolated files.
             </p>
+            <ul className="studio-edit-list" aria-label="Editing workflow highlights">
+              <li>Color team sets scene mood and keeps skin tones natural across every location.</li>
+              <li>Retouch artists refine details while preserving fabric texture and real expressions.</li>
+              <li>Final QA pass checks consistency before delivery so your gallery feels unified.</li>
+            </ul>
           </div>
 
           <Link to="/booking" className="studio-book-btn">
-            Book Your Experience
+            Secure Your Experience
           </Link>
         </Motion.article>
 
@@ -75,11 +130,60 @@ function CinematicStandardsSection() {
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.45, delay: 0.1 }}
         >
-          <img
-            src="https://assets.vogue.in/photos/662bf04608d6cfbc1b4e7fa8/3:4/w_2560%2Cc_limit/Unique%2520Weddings2.jpg"
-            alt="Cinematic wedding photography setup"
-            loading="lazy"
-          />
+          <div className="studio-slider-frame">
+            <Motion.img
+              key={activeTool.image}
+              src={activeTool.image}
+              alt={activeTool.alt}
+              loading="lazy"
+              className="studio-slider-image"
+              initial={{ opacity: 0.3, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+            />
+            <figcaption className="studio-slider-caption">
+              <p className="studio-slider-eyebrow">Tool Spotlight</p>
+              <h3>{activeTool.name}</h3>
+              <p>{activeTool.summary}</p>
+              <div className="studio-slider-specs">
+                <span>{activeTool.specA}</span>
+                <span>{activeTool.specB}</span>
+              </div>
+            </figcaption>
+          </div>
+
+          <div className="studio-slider-controls" aria-label="Tool slideshow controls">
+            <button
+              type="button"
+              className="studio-slider-arrow"
+              onClick={goToPrevTool}
+              aria-label="Show previous tool"
+            >
+              &larr;
+            </button>
+
+            <div className="studio-slider-dots">
+              {studioTools.map((tool, index) => (
+                <button
+                  key={tool.name}
+                  type="button"
+                  className={`studio-slider-dot ${index === activeToolIndex ? 'active' : ''}`}
+                  onClick={() => setActiveToolIndex(index)}
+                  aria-label={`Show ${tool.name}`}
+                  aria-current={index === activeToolIndex}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="studio-slider-arrow"
+              onClick={goToNextTool}
+              aria-label="Show next tool"
+            >
+              &rarr;
+            </button>
+          </div>
         </Motion.figure>
       </div>
     </section>

@@ -93,8 +93,12 @@
     grid-template-columns: 1fr;
   }
 
-  .studio-showcase img {
+  .studio-slider-image {
     height: 240px;
+  }
+
+  .studio-slider-controls {
+    padding-inline: 0.45rem;
   }
 
   .itinerary-grid {
@@ -224,7 +228,11 @@
     height: 170px;
   }
 
-  .studio-showcase img {
+  .studio-slider-image {
     height: 210px;
+  }
+
+  .studio-slider-controls {
+    border-radius: 14px;
   }
 }

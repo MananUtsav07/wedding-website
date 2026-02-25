@@ -232,11 +232,19 @@
 
 .studio-feature-block h3 {
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
+  display: grid;
+  gap: 0.32rem;
   color: #0f172a;
-  font-size: 1.1rem;
+  font-size: 1.08rem;
+  line-height: 1.42;
+}
+
+.studio-feature-label {
+  font-size: 0.73rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #2563eb;
+  font-weight: 700;
 }
 
 .studio-feature-block p {
@@ -245,19 +253,42 @@
   line-height: 1.7;
 }
 
-.studio-feature-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: inline-grid;
-  place-items: center;
+.studio-feature-chips {
+  margin-top: 0.7rem;
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.studio-feature-chips span {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #d6e4ff;
+  color: #1e3a8a;
+  background: #eff5ff;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0.27rem 0.58rem;
+}
+
+.studio-edit-list {
+  margin: 0.8rem 0 0;
+  padding-left: 1.05rem;
+  color: #334155;
+  display: grid;
+  gap: 0.5rem;
+  line-height: 1.58;
+}
+
+.studio-edit-list li::marker {
   color: #2563eb;
-  background: #e8f0ff;
-  flex: 0 0 auto;
 }
 
 .studio-book-btn {
-  margin-top: 1.3rem;
+  margin-top: 1.45rem;
   display: inline-block;
   text-decoration: none;
   color: #ffffff;
@@ -271,23 +302,126 @@
 
 .studio-showcase {
   margin: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 36px rgba(15, 23, 42, 0.22);
+  display: grid;
+  gap: 0.7rem;
   height: auto;
 }
 
-.studio-showcase img {
-  display: block;
-  width: 100%;
-  height: clamp(220px, 25vw, 320px);
-  object-fit: cover;
-  object-position: center 27%;
-  transition: transform 260ms ease;
+.studio-slider-frame {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 36px rgba(15, 23, 42, 0.22);
+  background: #ffffff;
 }
 
-.studio-showcase:hover img {
-  transform: scale(1.03);
+.studio-slider-image {
+  display: block;
+  width: 100%;
+  height: clamp(230px, 23vw, 300px);
+  object-fit: cover;
+  object-position: center center;
+}
+
+.studio-slider-caption {
+  padding: 0.9rem 0.95rem 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.studio-slider-eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.studio-slider-caption h3 {
+  margin: 0.45rem 0 0.35rem;
+  color: #0f172a;
+  font-size: 1.08rem;
+}
+
+.studio-slider-caption p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.studio-slider-specs {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.studio-slider-specs span {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1e3a8a;
+  background: #eaf1ff;
+  border: 1px solid #d3e2ff;
+  border-radius: 999px;
+  padding: 0.25rem 0.52rem;
+  font-weight: 700;
+}
+
+.studio-slider-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  border: 1px solid #dce4f3;
+  border-radius: 999px;
+  background: #ffffff;
+  padding: 0.3rem 0.38rem;
+  height: 75px;
+}
+
+.studio-slider-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #1e293b;
+  font-size: 1rem;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.studio-slider-arrow:hover {
+  border-color: #93c5fd;
+  background: #eaf1ff;
+  color: #1d4ed8;
+}
+
+.studio-slider-dots {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.studio-slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 0;
+  background: #cbd5e1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.studio-slider-dot.active {
+  width: 22px;
+  border-radius: 999px;
+  background: #2563eb;
 }
 
 .itinerary-section {
