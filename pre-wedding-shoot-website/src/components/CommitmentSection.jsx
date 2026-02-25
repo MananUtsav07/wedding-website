@@ -1,17 +1,23 @@
 import { motion as Motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+
+const MotionLink = Motion(Link)
 
 const points = [
   {
     title: 'Verified Professionals',
     description: 'Only top-tier, vetted artists with proven portfolios and a commitment to excellence.',
+    to: '/professionals',
   },
   {
     title: 'Curated Locations',
     description: 'Exclusive access to handpicked locations for breathtaking and timeless couple frames.',
+    to: '/destinations',
   },
   {
     title: 'Hassle-Free Booking',
     description: 'Seamless scheduling, secure payments, and easy planning from one place.',
+    to: '/booking',
   },
 ]
 
@@ -37,20 +43,22 @@ function CommitmentSection() {
 
       <div className="commitment-grid">
         {points.map((point, index) => (
-          <Motion.article
+          <MotionLink
             key={point.title}
-            className="commitment-card"
+            to={point.to}
+            className="commitment-card commitment-card-link"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.42, delay: index * 0.08 }}
+            whileHover={{ y: -3 }}
           >
             <span className="commitment-icon" aria-hidden="true">
               *
             </span>
             <h3>{point.title}</h3>
             <p>{point.description}</p>
-          </Motion.article>
+          </MotionLink>
         ))}
       </div>
     </section>

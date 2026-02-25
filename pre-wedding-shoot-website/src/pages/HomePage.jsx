@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import CinematicStandardsSection from '../components/CinematicStandardsSection'
 import Hero from '../components/Hero'
 import CommitmentSection from '../components/CommitmentSection'
 import ItinerarySection from '../components/ItinerarySection'
@@ -13,6 +14,7 @@ function HomePage() {
     <main className="page">
       <Hero />
       <CommitmentSection />
+      <CinematicStandardsSection />
       <ItinerarySection packages={itineraryPackages} />
     </main>
   )

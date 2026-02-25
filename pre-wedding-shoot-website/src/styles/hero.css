@@ -147,6 +147,23 @@
   padding: 1rem;
 }
 
+.commitment-card-link {
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.commitment-card-link:hover {
+  border-color: #bfdbfe;
+  box-shadow: 0 12px 20px rgba(37, 99, 235, 0.08);
+  background: #f2f7ff;
+}
+
+.commitment-card-link:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
 .commitment-icon {
   width: 34px;
   height: 34px;
@@ -164,6 +181,113 @@
 .commitment-card p {
   margin: 0;
   color: #64748b;
+}
+
+.studio-standard-section {
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.studio-standard-head {
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.studio-standard-eyebrow {
+  margin: 0;
+  font-size: 0.74rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.studio-standard-head h2 {
+  margin: 0.65rem 0 0.25rem;
+}
+
+.studio-standard-head p {
+  margin: 0;
+  color: #64748b;
+}
+
+.studio-standard-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.studio-standard-card {
+  border: 1px solid #dce4f3;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 34px rgba(15, 23, 42, 0.06);
+  padding: 1.4rem;
+}
+
+.studio-feature-block + .studio-feature-block {
+  margin-top: 1rem;
+}
+
+.studio-feature-block h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #0f172a;
+  font-size: 1.1rem;
+}
+
+.studio-feature-block p {
+  margin: 0.55rem 0 0;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.studio-feature-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: inline-grid;
+  place-items: center;
+  color: #2563eb;
+  background: #e8f0ff;
+  flex: 0 0 auto;
+}
+
+.studio-book-btn {
+  margin-top: 1.3rem;
+  display: inline-block;
+  text-decoration: none;
+  color: #ffffff;
+  border-radius: 999px;
+  border: 1px solid #1d4ed8;
+  background: linear-gradient(120deg, #2563eb, #1d4ed8);
+  font-weight: 700;
+  padding: 0.62rem 1rem;
+  box-shadow: 0 12px 18px rgba(29, 78, 216, 0.22);
+}
+
+.studio-showcase {
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 36px rgba(15, 23, 42, 0.22);
+  height: auto;
+}
+
+.studio-showcase img {
+  display: block;
+  width: 100%;
+  height: clamp(220px, 25vw, 320px);
+  object-fit: cover;
+  object-position: center 27%;
+  transition: transform 260ms ease;
+}
+
+.studio-showcase:hover img {
+  transform: scale(1.03);
 }
 
 .itinerary-section {

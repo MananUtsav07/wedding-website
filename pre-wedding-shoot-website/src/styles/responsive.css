@@ -89,6 +89,14 @@
     grid-template-columns: 1fr;
   }
 
+  .studio-standard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .studio-showcase img {
+    height: 240px;
+  }
+
   .itinerary-grid {
     grid-template-columns: 1fr;
   }
@@ -214,5 +222,9 @@
   .package-preview img {
     width: 100%;
     height: 170px;
+  }
+
+  .studio-showcase img {
+    height: 210px;
   }
 }
