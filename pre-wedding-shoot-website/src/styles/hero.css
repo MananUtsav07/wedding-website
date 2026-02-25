@@ -215,7 +215,7 @@
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 1.2rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .studio-standard-card {
@@ -224,6 +224,9 @@
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 20px 34px rgba(15, 23, 42, 0.06);
   padding: 1.4rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .studio-feature-block + .studio-feature-block {
@@ -288,7 +291,7 @@
 }
 
 .studio-book-btn {
-  margin-top: 1.45rem;
+  margin-top: auto;
   display: inline-block;
   text-decoration: none;
   color: #ffffff;
@@ -302,9 +305,10 @@
 
 .studio-showcase {
   margin: 0;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.7rem;
-  height: auto;
+  height: 100%;
 }
 
 .studio-slider-frame {
@@ -312,12 +316,17 @@
   overflow: hidden;
   box-shadow: 0 20px 36px rgba(15, 23, 42, 0.22);
   background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .studio-slider-image {
   display: block;
   width: 100%;
   height: clamp(230px, 23vw, 300px);
+  flex: 0 0 auto;
   object-fit: cover;
   object-position: center center;
 }
@@ -325,6 +334,7 @@
 .studio-slider-caption {
   padding: 0.9rem 0.95rem 1rem;
   border-top: 1px solid #e2e8f0;
+  flex: 1 1 auto;
 }
 
 .studio-slider-eyebrow {
