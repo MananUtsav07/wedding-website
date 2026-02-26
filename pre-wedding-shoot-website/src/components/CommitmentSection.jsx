@@ -31,11 +31,9 @@ function CommitmentSection() {
         viewport={{ once: true, amount: 0.25 }}
         transition={{ duration: 0.5 }}
       >
-        <div>
-          <p className="commitment-eyebrow">Our Commitment</p>
-          <h2>Why Choose Our Platform</h2>
-        </div>
-        <p>
+        <p className="commitment-eyebrow">Our Commitment</p>
+        <h2>Why Choose Our Platform</h2>
+        <p className="commitment-subtitle">
           We provide a seamless experience for couples looking to document their journey with curated
           luxury and professional ease.
         </p>

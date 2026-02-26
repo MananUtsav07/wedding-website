@@ -1,3 +1,7 @@
+:root {
+  --section-eyebrow-color: #2563eb;
+}
+
 .hero {
   border-radius: 0;
   min-height: calc(100svh - var(--topbar-height));
@@ -114,10 +118,11 @@
 }
 
 .commitment-head {
+  text-align: center;
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 1.5rem;
-  align-items: end;
+  justify-items: center;
+  gap: 0;
+  margin-bottom: 1.6rem;
 }
 
 .commitment-eyebrow {
@@ -125,16 +130,22 @@
   font-size: 0.74rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #2563eb;
+  color: var(--section-eyebrow-color);
 }
 
-.commitment-head p {
+.commitment-head h2 {
+  margin: 0.65rem 0 0.25rem;
+}
+
+.commitment-subtitle {
   margin: 0;
   color: #64748b;
+  max-width: 760px;
+  line-height: 1.5;
 }
 
 .commitment-grid {
-  margin-top: 1.3rem;
+  margin-top: 0;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
@@ -204,14 +215,14 @@
   font-size: 0.74rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: #2563eb;
+  color: var(--section-eyebrow-color);
 }
 
 .studio-standard-head h2 {
   margin: 0.65rem 0 0.25rem;
 }
 
-.studio-standard-head p {
+.studio-standard-head p:not(.studio-standard-eyebrow) {
   margin: 0;
   color: #64748b;
 }

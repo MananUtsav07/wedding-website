@@ -82,7 +82,7 @@
 
   .commitment-head {
     grid-template-columns: 1fr;
-    gap: 0.6rem;
+    gap: 0;
   }
 
   .commitment-grid {

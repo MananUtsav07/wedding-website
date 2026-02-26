@@ -1,9 +1,11 @@
-﻿import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { createAccount, getCurrentSession, loginAccount } from '../utils/authStorage'
 
 function LoginPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const redirectTo = location.state?.redirectTo || '/'
   const [mode, setMode] = useState('signin')
   const [message, setMessage] = useState('')
   const [isError, setIsError] = useState(false)
@@ -66,7 +68,7 @@ function LoginPage() {
       }
 
       setMessage('Account created successfully. Redirecting to home...')
-      window.setTimeout(() => navigate('/'), 900)
+      window.setTimeout(() => navigate(redirectTo), 900)
       return
     }
 
@@ -79,7 +81,7 @@ function LoginPage() {
 
     setIsError(false)
     setMessage('Login successful. Redirecting to home...')
-    window.setTimeout(() => navigate('/'), 900)
+    window.setTimeout(() => navigate(redirectTo), 900)
   }
 
   return (
@@ -184,3 +186,5 @@ function LoginPage() {
 }
 
 export default LoginPage
+
+

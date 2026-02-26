@@ -130,6 +130,50 @@
   box-shadow: 0 16px 30px rgba(15, 23, 42, 0.05);
 }
 
+.custom-quote-duration-group {
+  display: grid;
+  gap: 0.55rem;
+  width: min(260px, 100%);
+  margin-bottom: 1rem;
+}
+
+.custom-quote-duration-group label {
+  margin: 0;
+  color: #0f172a;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.custom-quote-duration-select {
+  width: 100%;
+  border: 1px solid #d4dceb;
+  border-radius: 12px;
+  background: #f9fbff;
+  color: #0f172a;
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+  min-height: 3.15rem;
+}
+
+.custom-quote-duration-select:focus {
+  outline: 2px solid #bfdbfe;
+  border-color: #60a5fa;
+}
+
+.custom-quote-day-block + .custom-quote-day-block {
+  margin-top: 1.25rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.custom-quote-day-title {
+  margin: 0 0 0.8rem;
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
 .custom-quote-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(260px, 30vw, 360px);
@@ -375,6 +419,70 @@
   cursor: pointer;
 }
 
+.custom-quote-login-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1600;
+  display: grid;
+  place-items: center;
+  background: rgba(9, 16, 33, 0.42);
+  backdrop-filter: blur(3px);
+  padding: 1rem;
+}
+
+.custom-quote-login-dialog {
+  width: min(420px, 100%);
+  border: 1px solid #d8e0ef;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.24);
+  padding: 1rem;
+}
+
+.custom-quote-login-dialog p {
+  margin: 0;
+  color: #1f2937;
+  font-size: 0.96rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.custom-quote-login-actions {
+  margin-top: 0.9rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.custom-quote-login-cancel-btn,
+.custom-quote-login-go-btn {
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+}
+
+.custom-quote-login-cancel-btn {
+  border: 1px solid #cfd9ea;
+  background: #ffffff;
+  color: #334155;
+}
+
+.custom-quote-login-cancel-btn:hover {
+  background: #f8fafc;
+}
+
+.custom-quote-login-go-btn {
+  border: 1px solid #1d4ed8;
+  background: linear-gradient(120deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+}
+
+.custom-quote-login-go-btn:hover {
+  filter: brightness(1.03);
+}
+
 @media (max-width: 860px) {
   .custom-quote-header {
     grid-template-columns: 1fr;
@@ -382,6 +490,10 @@
 
   .custom-quote-row {
     grid-template-columns: 1fr;
+  }
+
+  .custom-quote-duration-group {
+    width: 100%;
   }
 
   .custom-quote-tile-grid {
@@ -395,6 +507,15 @@
 
   .custom-quote-submit {
     width: 100%;
+  }
+
+  .custom-quote-login-actions {
+    justify-content: stretch;
+  }
+
+  .custom-quote-login-cancel-btn,
+  .custom-quote-login-go-btn {
+    flex: 1 1 auto;
   }
 }
 
