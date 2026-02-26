@@ -64,127 +64,128 @@ function CinematicStandardsSection() {
 
   return (
     <section className="section studio-standard-section">
-      <Motion.div
-        className="studio-standard-head"
-        initial={{ opacity: 0, y: 22 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.45 }}
-      >
-        <p className="studio-standard-eyebrow">The Studio Standard</p>
-        <h2>Cinematic Standards</h2>
-        <p>Crafted with precision, edited with artistry.</p>
-      </Motion.div>
-
-      <div className="studio-standard-grid">
-        <Motion.article
-          className="studio-standard-card"
+      <div className="studio-standard-inner">
+        <Motion.div
+          className="studio-standard-head"
           initial={{ opacity: 0, y: 22 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.45, delay: 0.06 }}
         >
-          <div className="studio-feature-block">
-            <h3>
-              <span className="studio-feature-label">The Gear</span>
-              Full-frame cinema kit for texture-rich storytelling
-            </h3>
-            <p>
-              We deploy 8K cinema sensors paired with premium primes and stabilized camera rigs so every
-              frame keeps detail in attire, skin tone, and ambient light. From wide landscapes to close
-              expressions, our kit stays sharp, steady, and intentional.
-            </p>
-            <div className="studio-feature-chips" aria-label="Primary gear">
-              <span>Cinema EOS Bodies</span>
-              <span>Master Prime Glass</span>
-              <span>Ronin 4D Movement</span>
-            </div>
-          </div>
+          <p className="studio-standard-eyebrow">The Studio Standard</p>
+          <h2>Cinematic Standards</h2>
+          <p>Crafted with precision, edited with artistry.</p>
+        </Motion.div>
 
-          <div className="studio-feature-block">
-            <h3>
-              <span className="studio-feature-label">The Edit</span>
-              In-house post team, one visual language from start to finish
-            </h3>
-            <p>
-              Our editors do not batch-fix images. They build your final story in stages: color grading,
-              skin-tone balancing, texture-safe retouching, and sequence review. Every gallery is finished
-              as a cohesive narrative, not just isolated files.
-            </p>
-            <ul className="studio-edit-list" aria-label="Editing workflow highlights">
-              <li>Color team sets scene mood and keeps skin tones natural across every location.</li>
-              <li>Retouch artists refine details while preserving fabric texture and real expressions.</li>
-              <li>Final QA pass checks consistency before delivery so your gallery feels unified.</li>
-            </ul>
-          </div>
-
-          <Link to="/booking" className="studio-book-btn">
-            Secure Your Experience
-          </Link>
-        </Motion.article>
-
-        <Motion.figure
-          className="studio-showcase"
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.45, delay: 0.1 }}
-        >
-          <div className="studio-slider-frame">
-            <Motion.img
-              key={activeTool.image}
-              src={activeTool.image}
-              alt={activeTool.alt}
-              loading="lazy"
-              className="studio-slider-image"
-              initial={{ opacity: 0.3, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-            />
-            <figcaption className="studio-slider-caption">
-              <p className="studio-slider-eyebrow">Tool Spotlight</p>
-              <h3>{activeTool.name}</h3>
-              <p>{activeTool.summary}</p>
-              <div className="studio-slider-specs">
-                <span>{activeTool.specA}</span>
-                <span>{activeTool.specB}</span>
+        <div className="studio-standard-grid">
+          <Motion.article
+            className="studio-standard-card"
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.45, delay: 0.06 }}
+          >
+            <div className="studio-feature-block">
+              <h3>
+                <span className="studio-feature-label">The Gear</span>
+                Full-frame cinema kit for texture-rich storytelling
+              </h3>
+              <p>
+                We deploy 8K cinema sensors paired with premium primes and stabilized camera rigs so every
+                frame keeps detail in attire, skin tone, and ambient light. From wide landscapes to close
+                expressions, our kit stays sharp, steady, and intentional.
+              </p>
+              <div className="studio-feature-chips" aria-label="Primary gear">
+                <span>Cinema EOS Bodies</span>
+                <span>Master Prime Glass</span>
+                <span>Ronin 4D Movement</span>
               </div>
-            </figcaption>
-          </div>
-
-          <div className="studio-slider-controls" aria-label="Tool slideshow controls">
-            <button
-              type="button"
-              className="studio-slider-arrow"
-              onClick={goToPrevTool}
-              aria-label="Show previous tool"
-            >
-              &larr;
-            </button>
-
-            <div className="studio-slider-dots">
-              {studioTools.map((tool, index) => (
-                <button
-                  key={tool.name}
-                  type="button"
-                  className={`studio-slider-dot ${index === activeToolIndex ? 'active' : ''}`}
-                  onClick={() => setActiveToolIndex(index)}
-                  aria-label={`Show ${tool.name}`}
-                  aria-current={index === activeToolIndex}
-                />
-              ))}
             </div>
 
-            <button
-              type="button"
-              className="studio-slider-arrow"
-              onClick={goToNextTool}
-              aria-label="Show next tool"
-            >
-              &rarr;
-            </button>
-          </div>
-        </Motion.figure>
+            <div className="studio-feature-block">
+              <h3>
+                <span className="studio-feature-label">The Edit</span>
+                In-house post team, one visual language from start to finish
+              </h3>
+              <p>
+                Our editors do not batch-fix images. They build your final story in stages: color grading,
+                skin-tone balancing, texture-safe retouching, and sequence review. Every gallery is finished
+                as a cohesive narrative, not just isolated files.
+              </p>
+              <ul className="studio-edit-list" aria-label="Editing workflow highlights">
+                <li>Color team sets scene mood and keeps skin tones natural across every location.</li>
+                <li>Retouch artists refine details while preserving fabric texture and real expressions.</li>
+                <li>Final QA pass checks consistency before delivery so your gallery feels unified.</li>
+              </ul>
+            </div>
+
+            <Link to="/booking" className="studio-book-btn">
+              Secure Your Experience
+            </Link>
+          </Motion.article>
+
+          <Motion.figure
+            className="studio-showcase"
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
+          >
+            <div className="studio-slider-frame">
+              <Motion.img
+                key={activeTool.image}
+                src={activeTool.image}
+                alt={activeTool.alt}
+                loading="lazy"
+                className="studio-slider-image"
+                initial={{ opacity: 0.3, scale: 1.04 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+              />
+              <figcaption className="studio-slider-caption">
+                <p className="studio-slider-eyebrow">Tool Spotlight</p>
+                <h3>{activeTool.name}</h3>
+                <p>{activeTool.summary}</p>
+                <div className="studio-slider-specs">
+                  <span>{activeTool.specA}</span>
+                  <span>{activeTool.specB}</span>
+                </div>
+              </figcaption>
+            </div>
+
+            <div className="studio-slider-controls" aria-label="Tool slideshow controls">
+              <button
+                type="button"
+                className="studio-slider-arrow"
+                onClick={goToPrevTool}
+                aria-label="Show previous tool"
+              >
+                &larr;
+              </button>
+
+              <div className="studio-slider-dots">
+                {studioTools.map((tool, index) => (
+                  <button
+                    key={tool.name}
+                    type="button"
+                    className={`studio-slider-dot ${index === activeToolIndex ? 'active' : ''}`}
+                    onClick={() => setActiveToolIndex(index)}
+                    aria-label={`Show ${tool.name}`}
+                    aria-current={index === activeToolIndex}
+                  />
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="studio-slider-arrow"
+                onClick={goToNextTool}
+                aria-label="Show next tool"
+              >
+                &rarr;
+              </button>
+            </div>
+          </Motion.figure>
+        </div>
       </div>
     </section>
   )

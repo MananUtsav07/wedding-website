@@ -136,6 +136,9 @@
   padding: 0.45rem 0.75rem;
   color: #1f2937;
   cursor: pointer;
+  display: grid;
+  gap: 0.1rem;
+  text-align: left;
 }
 
 .slot-pill.active {
@@ -143,6 +146,19 @@
   background: #e8f0ff;
   color: #1152d4;
   font-weight: 600;
+}
+
+.slot-title {
+  font-weight: 700;
+}
+
+.slot-time {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.slot-pill.active .slot-time {
+  color: #1d4ed8;
 }
 
 .booking-card-head {

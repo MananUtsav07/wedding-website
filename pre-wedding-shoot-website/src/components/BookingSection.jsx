@@ -1,6 +1,13 @@
 import { motion as Motion } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
 
+const STANDARD_TIME_SLOTS = [
+  { id: 'morning-glow', label: 'Morning Glow', time: '9:00 AM - 12:00 PM' },
+  { id: 'high-noon', label: 'High Noon', time: '12:00 PM - 3:00 PM' },
+  { id: 'evening-softness', label: 'Evening Softness', time: '3:00 PM - 5:00 PM' },
+  { id: 'sunset-gold', label: 'Sunset Gold', time: '5:00 PM - 7:00 PM' },
+]
+
 const PACKAGE_MAP = {
   'pre-wedding': {
     title: 'Pre Wedding Shoot',
@@ -40,7 +47,7 @@ function getRecommendedProfessional(locationName, professionals) {
   return professionals.find((pro) => pro.city.toLowerCase() === city) ?? professionals[0]
 }
 
-function BookingSection({ locations, slotMap, professionals, onConfirm, initialLocation }) {
+function BookingSection({ locations, professionals, onConfirm, initialLocation }) {
   const defaultLocation = locations.some((item) => item.name === initialLocation)
     ? initialLocation
     : locations[0].name
@@ -52,7 +59,7 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
     phone: '',
     location: defaultLocation,
     date: '',
-    slot: slotMap[defaultLocation][0],
+    slot: STANDARD_TIME_SLOTS[0].id,
     photographer: 'recommended',
     packageType: 'pre-wedding',
     otherEventDescription: '',
@@ -61,8 +68,11 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
   })
   const [otherTypingPlaceholder, setOtherTypingPlaceholder] = useState('')
 
-  const availableSlots = useMemo(() => slotMap[form.location] ?? [], [form.location, slotMap])
   const selectedPackage = useMemo(() => PACKAGE_MAP[form.packageType] ?? PACKAGE_MAP['pre-wedding'], [form.packageType])
+  const selectedTimeSlot = useMemo(
+    () => STANDARD_TIME_SLOTS.find((slot) => slot.id === form.slot) ?? STANDARD_TIME_SLOTS[0],
+    [form.slot],
+  )
   const recommendedProfessional = useMemo(
     () => getRecommendedProfessional(form.location, professionals),
     [form.location, professionals],
@@ -110,7 +120,7 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
     const { name, value } = event.target
     setForm((prev) => {
       if (name === 'location') {
-        return { ...prev, location: value, slot: slotMap[value][0] }
+        return { ...prev, location: value, slot: STANDARD_TIME_SLOTS[0].id }
       }
       if (name === 'packageType') {
         return {
@@ -132,6 +142,7 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
 
     onConfirm({
       ...form,
+      slot: `${selectedTimeSlot.label} (${selectedTimeSlot.time})`,
       packageType: selectedPackage.title,
       selectedProfessional,
       bookingId: `PW-${Date.now().toString().slice(-6)}`,
@@ -186,16 +197,17 @@ function BookingSection({ locations, slotMap, professionals, onConfirm, initialL
 
             <label className="slot-label">Available Sessions</label>
             <div className="slots">
-              {availableSlots.map((slot) => (
+              {STANDARD_TIME_SLOTS.map((slot) => (
                 <Motion.button
-                  key={slot}
+                  key={slot.id}
                   type="button"
-                  className={`slot-pill ${form.slot === slot ? 'active' : ''}`}
-                  onClick={() => setForm((prev) => ({ ...prev, slot }))}
+                  className={`slot-pill ${form.slot === slot.id ? 'active' : ''}`}
+                  onClick={() => setForm((prev) => ({ ...prev, slot: slot.id }))}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {slot}
+                  <span className="slot-title">{slot.label}</span>
+                  <span className="slot-time">{slot.time}</span>
                 </Motion.button>
               ))}
             </div>

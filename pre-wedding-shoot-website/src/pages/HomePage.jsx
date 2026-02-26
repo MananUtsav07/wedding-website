@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import CinematicStandardsSection from '../components/CinematicStandardsSection'
+import CustomQuoteSection from '../components/CustomQuoteSection'
 import Hero from '../components/Hero'
 import CommitmentSection from '../components/CommitmentSection'
 import ItinerarySection from '../components/ItinerarySection'
-import { itineraryPackages } from '../data/siteData'
+import { itineraryPackages, locations } from '../data/siteData'
 
 function HomePage() {
   useEffect(() => {
@@ -15,6 +16,7 @@ function HomePage() {
       <Hero />
       <CommitmentSection />
       <CinematicStandardsSection />
+      <CustomQuoteSection locations={locations} />
       <ItinerarySection packages={itineraryPackages} />
     </main>
   )

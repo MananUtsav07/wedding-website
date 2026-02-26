@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import BookingSection from '../components/BookingSection'
 import ConfirmationSection from '../components/ConfirmationSection'
-import { locations, professionals, slotMap } from '../data/siteData'
+import { locations, professionals } from '../data/siteData'
 
 const BOOKINGS_STORAGE_KEY = 'pw_booking_history_v1'
 
@@ -36,7 +36,6 @@ function BookingPage() {
     <main className="page">
       <BookingSection
         locations={locations}
-        slotMap={slotMap}
         professionals={professionals}
         initialLocation={selectedLocation}
         onConfirm={setConfirmed}
