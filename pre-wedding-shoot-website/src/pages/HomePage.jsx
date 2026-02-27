@@ -4,6 +4,7 @@ import CustomQuoteSection from '../components/CustomQuoteSection'
 import Hero from '../components/Hero'
 import CommitmentSection from '../components/CommitmentSection'
 import ItinerarySection from '../components/ItinerarySection'
+import { itinerarySharedSlides } from '../data/itinerarySlides'
 import { itineraryPackages, locations } from '../data/siteData'
 
 function HomePage() {
@@ -17,7 +18,7 @@ function HomePage() {
       <CommitmentSection />
       <CinematicStandardsSection />
       <CustomQuoteSection locations={locations} />
-      <ItinerarySection packages={itineraryPackages} />
+      <ItinerarySection packages={itineraryPackages} sharedSlides={itinerarySharedSlides} />
     </main>
   )
 }

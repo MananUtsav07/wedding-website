@@ -87,6 +87,72 @@
   gap: 0.7rem;
 }
 
+.booking-date-options {
+  display: grid;
+  grid-template-columns: minmax(180px, 220px) 1fr;
+  gap: 0.8rem;
+  align-items: end;
+}
+
+.booking-card .booking-date-options label {
+  margin-top: 0;
+}
+
+.booking-duration-field select {
+  width: 100%;
+}
+
+.booking-card .booking-sync-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #d4dceb;
+  border-radius: 10px;
+  background: #f8fafc;
+  padding: 0.75rem;
+  min-height: 42px;
+}
+
+.booking-sync-field input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: #1152d4;
+}
+
+.booking-sync-field.disabled {
+  opacity: 0.64;
+}
+
+.booking-sync-note {
+  margin: 0.62rem 0 0;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.booking-multi-day-stack {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 0.65rem;
+}
+
+.booking-day-card {
+  border: 1px solid #dbe4f3;
+  border-radius: 12px;
+  background: #f8fbff;
+  padding: 0.8rem;
+}
+
+.booking-day-card h3 {
+  margin: 0 0 0.55rem;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.booking-day-card .slot-label {
+  margin-top: 0.75rem;
+}
+
 .booking-card label {
   display: grid;
   gap: 0.3rem;
@@ -337,5 +403,12 @@
 
 .clear-filter:hover {
   border-bottom-color: #91472d;
+}
+
+@media (max-width: 860px) {
+  .booking-date-options {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
 }
 

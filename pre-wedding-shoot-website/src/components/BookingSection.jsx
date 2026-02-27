@@ -7,6 +7,7 @@ const STANDARD_TIME_SLOTS = [
   { id: 'evening-softness', label: 'Evening Softness', time: '3:00 PM - 5:00 PM' },
   { id: 'sunset-gold', label: 'Sunset Gold', time: '5:00 PM - 7:00 PM' },
 ]
+const MAX_BOOKING_DAYS = 5
 
 const PACKAGE_MAP = {
   'pre-wedding': {
@@ -42,8 +43,40 @@ const OTHER_EVENT_PLACEHOLDERS = [
   'Anniversary event...',
 ]
 
+function clampBookingDays(value) {
+  return Math.min(MAX_BOOKING_DAYS, Math.max(1, Number(value) || 1))
+}
+
+function addDaysToIsoDate(dateValue, offset) {
+  if (!dateValue) {
+    return ''
+  }
+
+  const parts = dateValue.split('-').map(Number)
+  if (parts.length !== 3 || parts.some(Number.isNaN)) {
+    return ''
+  }
+
+  const date = new Date(parts[0], parts[1] - 1, parts[2])
+  date.setDate(date.getDate() + offset)
+
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
+function createDayPlan(baseLocation, baseDate = '', baseSlot = STANDARD_TIME_SLOTS[0].id, dayOffset = 0) {
+  return {
+    date: addDaysToIsoDate(baseDate, dayOffset),
+    location: baseLocation,
+    slot: baseSlot,
+  }
+}
+
 function getRecommendedProfessional(locationName, professionals) {
-  const city = locationName.split(',')[0].trim().toLowerCase()
+  const safeLocationName = typeof locationName === 'string' ? locationName : ''
+  const city = safeLocationName.split(',')[0].trim().toLowerCase()
   return professionals.find((pro) => pro.city.toLowerCase() === city) ?? professionals[0]
 }
 
@@ -66,16 +99,20 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
     paymentMethod: 'UPI',
     notes: '',
   })
+  const [shootDays, setShootDays] = useState(1)
+  const [useSameOptions, setUseSameOptions] = useState(true)
+  const [dayPlans, setDayPlans] = useState(() => [createDayPlan(defaultLocation)])
   const [otherTypingPlaceholder, setOtherTypingPlaceholder] = useState('')
+  const primaryDayPlan = dayPlans[0] ?? createDayPlan(defaultLocation)
 
   const selectedPackage = useMemo(() => PACKAGE_MAP[form.packageType] ?? PACKAGE_MAP['pre-wedding'], [form.packageType])
   const selectedTimeSlot = useMemo(
-    () => STANDARD_TIME_SLOTS.find((slot) => slot.id === form.slot) ?? STANDARD_TIME_SLOTS[0],
-    [form.slot],
+    () => STANDARD_TIME_SLOTS.find((slot) => slot.id === primaryDayPlan.slot) ?? STANDARD_TIME_SLOTS[0],
+    [primaryDayPlan.slot],
   )
   const recommendedProfessional = useMemo(
-    () => getRecommendedProfessional(form.location, professionals),
-    [form.location, professionals],
+    () => getRecommendedProfessional(primaryDayPlan.location, professionals),
+    [primaryDayPlan.location, professionals],
   )
 
   useEffect(() => {
@@ -116,12 +153,28 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
     return () => window.clearTimeout(timerId)
   }, [form.packageType])
 
+  useEffect(() => {
+    setDayPlans((prev) => {
+      if (shootDays === prev.length) {
+        return prev
+      }
+
+      if (shootDays < prev.length) {
+        return prev.slice(0, shootDays)
+      }
+
+      const dayOne = prev[0] ?? createDayPlan(defaultLocation)
+      const next = [...prev]
+      for (let i = prev.length; i < shootDays; i += 1) {
+        next.push(createDayPlan(dayOne.location, dayOne.date, dayOne.slot, i))
+      }
+      return next
+    })
+  }, [shootDays, defaultLocation])
+
   const onChange = (event) => {
     const { name, value } = event.target
     setForm((prev) => {
-      if (name === 'location') {
-        return { ...prev, location: value, slot: STANDARD_TIME_SLOTS[0].id }
-      }
       if (name === 'packageType') {
         return {
           ...prev,
@@ -133,6 +186,103 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
     })
   }
 
+  const setDayDate = (dayIndex, value) => {
+    setDayPlans((prev) => {
+      const next = prev.map((day) => ({ ...day }))
+      const previousPrimaryDate = prev[0]?.date || ''
+
+      next[dayIndex].date = value
+
+      if (dayIndex === 0) {
+        for (let i = 1; i < next.length; i += 1) {
+          const previousAutoDate = addDaysToIsoDate(previousPrimaryDate, i)
+          if (!next[i].date || next[i].date === previousAutoDate) {
+            next[i].date = addDaysToIsoDate(value, i)
+          }
+        }
+      }
+
+      return next
+    })
+
+    if (dayIndex === 0) {
+      setForm((prev) => ({ ...prev, date: value }))
+    }
+  }
+
+  const setDayLocation = (dayIndex, value) => {
+    setDayPlans((prev) => {
+      const next = prev.map((day) => ({ ...day }))
+      const previousPrimaryLocation = prev[0]?.location || defaultLocation
+      next[dayIndex].location = value
+
+      if (dayIndex === 0) {
+        for (let i = 1; i < next.length; i += 1) {
+          if (useSameOptions || !next[i].location || next[i].location === previousPrimaryLocation) {
+            next[i].location = value
+          }
+        }
+      }
+
+      return next
+    })
+
+    if (dayIndex === 0) {
+      setForm((prev) => ({ ...prev, location: value }))
+    }
+  }
+
+  const setDaySlot = (dayIndex, value) => {
+    setDayPlans((prev) => {
+      const next = prev.map((day) => ({ ...day }))
+      next[dayIndex].slot = value
+
+      if (dayIndex === 0 && useSameOptions) {
+        for (let i = 1; i < next.length; i += 1) {
+          next[i].slot = value
+        }
+      }
+
+      return next
+    })
+
+    if (dayIndex === 0) {
+      setForm((prev) => ({ ...prev, slot: value }))
+    }
+  }
+
+  const onShootDaysChange = (event) => {
+    const nextShootDays = clampBookingDays(event.target.value)
+    setShootDays(nextShootDays)
+    if (nextShootDays === 1) {
+      setUseSameOptions(true)
+    }
+  }
+
+  const onToggleSameOptions = (event) => {
+    const checked = event.target.checked
+    setUseSameOptions(checked)
+
+    if (!checked) {
+      return
+    }
+
+    setDayPlans((prev) => {
+      const dayOne = prev[0] ?? createDayPlan(defaultLocation)
+      return prev.map((day, index) => {
+        if (index === 0) {
+          return day
+        }
+        return {
+          ...day,
+          location: dayOne.location,
+          slot: dayOne.slot,
+          date: day.date || addDaysToIsoDate(dayOne.date, index),
+        }
+      })
+    })
+  }
+
   const onSubmit = (event) => {
     event.preventDefault()
     const selectedProfessional =
@@ -140,9 +290,31 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
         ? recommendedProfessional.name
         : professionals.find((pro) => pro.id === form.photographer)?.name || 'Not selected'
 
+    const primaryDate = dayPlans[0]?.date || ''
+    const primaryLocation = dayPlans[0]?.location || defaultLocation
+    const primarySlot = dayPlans[0]?.slot || STANDARD_TIME_SLOTS[0].id
+    const finalizedDayPlans = dayPlans.slice(0, shootDays).map((day, index) => {
+      const slotId = useSameOptions ? primarySlot : day.slot || primarySlot
+      const slotMeta = STANDARD_TIME_SLOTS.find((slot) => slot.id === slotId) ?? STANDARD_TIME_SLOTS[0]
+      return {
+        date: day.date || addDaysToIsoDate(primaryDate, index),
+        location: useSameOptions ? primaryLocation : day.location || primaryLocation,
+        slotId,
+        slot: `${slotMeta.label} (${slotMeta.time})`,
+      }
+    })
+
+    const firstDay = finalizedDayPlans[0]
+
     onConfirm({
       ...form,
-      slot: `${selectedTimeSlot.label} (${selectedTimeSlot.time})`,
+      location: firstDay.location,
+      date: firstDay.date,
+      slot: firstDay.slot,
+      shootDays,
+      sameOptionsForAllDates: useSameOptions,
+      dayPlans: finalizedDayPlans,
+      coupleName: `${form.partnerOne} & ${form.partnerTwo}`,
       packageType: selectedPackage.title,
       selectedProfessional,
       bookingId: `PW-${Date.now().toString().slice(-6)}`,
@@ -164,12 +336,12 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
             <div className="booking-grid-two">
               <label>
                 Preferred Date
-                <input name="date" type="date" value={form.date} onChange={onChange} required />
+                <input type="date" value={primaryDayPlan.date} onChange={(event) => setDayDate(0, event.target.value)} required />
               </label>
 
               <label>
                 Destination
-                <select name="location" value={form.location} onChange={onChange}>
+                <select value={primaryDayPlan.location} onChange={(event) => setDayLocation(0, event.target.value)}>
                   {locations.map((place) => (
                     <option value={place.name} key={place.name}>
                       {place.name}
@@ -178,6 +350,104 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
                 </select>
               </label>
             </div>
+
+            <div className="booking-date-options">
+              <label className="booking-duration-field">
+                Number of dates
+                <select value={shootDays} onChange={onShootDaysChange}>
+                  {Array.from({ length: MAX_BOOKING_DAYS }, (_, index) => index + 1).map((value) => (
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className={`booking-sync-field ${shootDays === 1 ? 'disabled' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={useSameOptions || shootDays === 1}
+                  onChange={onToggleSameOptions}
+                  disabled={shootDays === 1}
+                />
+                Use same destination and session for all dates
+              </label>
+            </div>
+
+            {shootDays > 1 && useSameOptions ? (
+              <p className="booking-sync-note">
+                Day 2 to Day {shootDays} will carry forward destination and date sequence from Day 1.
+              </p>
+            ) : null}
+
+            <label className="slot-label">{shootDays > 1 && !useSameOptions ? 'Day 1 Sessions' : 'Available Sessions'}</label>
+            <div className="slots">
+              {STANDARD_TIME_SLOTS.map((slot) => (
+                <Motion.button
+                  key={slot.id}
+                  type="button"
+                  className={`slot-pill ${primaryDayPlan.slot === slot.id ? 'active' : ''}`}
+                  onClick={() => setDaySlot(0, slot.id)}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <span className="slot-title">{slot.label}</span>
+                  <span className="slot-time">{slot.time}</span>
+                </Motion.button>
+              ))}
+            </div>
+
+            {shootDays > 1 && !useSameOptions ? (
+              <div className="booking-multi-day-stack">
+                {dayPlans.slice(1, shootDays).map((dayPlan, extraIndex) => {
+                  const dayIndex = extraIndex + 1
+                  return (
+                    <div className="booking-day-card" key={`booking-day-${dayIndex + 1}`}>
+                      <h3>Day {dayIndex + 1}</h3>
+                      <div className="booking-grid-two">
+                        <label>
+                          Preferred Date
+                          <input
+                            type="date"
+                            value={dayPlan.date}
+                            onChange={(event) => setDayDate(dayIndex, event.target.value)}
+                            required
+                          />
+                        </label>
+
+                        <label>
+                          Destination
+                          <select value={dayPlan.location} onChange={(event) => setDayLocation(dayIndex, event.target.value)}>
+                            {locations.map((place) => (
+                              <option value={place.name} key={`${place.id}-${dayIndex}`}>
+                                {place.name}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      </div>
+
+                      <label className="slot-label">Available Sessions</label>
+                      <div className="slots">
+                        {STANDARD_TIME_SLOTS.map((slot) => (
+                          <Motion.button
+                            key={`${slot.id}-${dayIndex}`}
+                            type="button"
+                            className={`slot-pill ${dayPlan.slot === slot.id ? 'active' : ''}`}
+                            onClick={() => setDaySlot(dayIndex, slot.id)}
+                            whileHover={{ y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            <span className="slot-title">{slot.label}</span>
+                            <span className="slot-time">{slot.time}</span>
+                          </Motion.button>
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : null}
 
             <label>
               Assigned Photographer
@@ -194,23 +464,6 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
             <p className="recommendation-note">
               Recommended for this location: <strong>{recommendedProfessional.name}</strong>
             </p>
-
-            <label className="slot-label">Available Sessions</label>
-            <div className="slots">
-              {STANDARD_TIME_SLOTS.map((slot) => (
-                <Motion.button
-                  key={slot.id}
-                  type="button"
-                  className={`slot-pill ${form.slot === slot.id ? 'active' : ''}`}
-                  onClick={() => setForm((prev) => ({ ...prev, slot: slot.id }))}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <span className="slot-title">{slot.label}</span>
-                  <span className="slot-time">{slot.time}</span>
-                </Motion.button>
-              ))}
-            </div>
           </Motion.section>
 
           <Motion.section

@@ -105,6 +105,10 @@
     grid-template-columns: 1fr;
   }
 
+  .itinerary-slide-image {
+    height: 230px;
+  }
+
   .destination-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -226,6 +230,10 @@
   .package-preview img {
     width: 100%;
     height: 170px;
+  }
+
+  .itinerary-slide-image {
+    height: 190px;
   }
 
   .studio-slider-image {

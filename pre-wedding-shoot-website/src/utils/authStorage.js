@@ -1,5 +1,13 @@
 import { isSupabaseConfigured, supabase } from './supabaseClient'
 const SESSION_KEY = 'pw_auth_session_v1'
+const APP_URL = (import.meta.env.VITE_APP_URL || window.location.origin).replace(/\/$/, '')
+
+function normalizeRedirectPath(path = '/') {
+  if (!path) {
+    return '/'
+  }
+  return path.startsWith('/') ? path : `/${path}`
+}
 
 function emitAuthChanged() {
   window.dispatchEvent(new CustomEvent('auth-changed'))
@@ -52,6 +60,7 @@ export async function createAccount({ fullName, email, password }) {
       data: {
         full_name: fullName.trim(),
       },
+      emailRedirectTo: `${APP_URL}/login`,
     },
   })
 
@@ -94,6 +103,31 @@ export async function loginAccount({ email, password }) {
   }
 
   return { ok: true, user: shapedSession }
+}
+
+export async function loginWithSocial({ provider = 'google', redirectPath = '/' } = {}) {
+  if (!ensureConfigured()) {
+    return {
+      ok: false,
+      message: 'Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env.',
+    }
+  }
+
+  const origin = window.location.origin.replace(/\/$/, '')
+  const redirectTo = `${origin}${normalizeRedirectPath(redirectPath)}`
+
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo,
+    },
+  })
+
+  if (error) {
+    return { ok: false, message: error.message }
+  }
+
+  return { ok: true }
 }
 
 export function getCurrentSession() {

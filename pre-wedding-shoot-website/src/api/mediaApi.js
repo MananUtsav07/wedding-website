@@ -101,3 +101,12 @@ export async function fetchGalleryShotsWithUrls(shots) {
     })),
   )
 }
+
+export async function fetchItinerarySlidesWithUrls(slides) {
+  return Promise.all(
+    slides.map(async (slide) => ({
+      ...slide,
+      image: await fetchMediaUrlByKey(slide.mediaKey),
+    })),
+  )
+}

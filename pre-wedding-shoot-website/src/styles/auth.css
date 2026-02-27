@@ -151,6 +151,73 @@
   cursor: pointer;
 }
 
+.auth-social-divider {
+  margin-top: 0.9rem;
+  margin-bottom: 0.7rem;
+  position: relative;
+  text-align: center;
+}
+
+.auth-social-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #e2e8f0;
+  transform: translateY(-50%);
+}
+
+.auth-social-divider span {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  padding: 0 0.55rem;
+  font-size: 0.78rem;
+  color: #64748b;
+  background: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.auth-social-btn {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #d4dceb;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem;
+  cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.auth-social-btn:hover {
+  border-color: #93c5fd;
+  background: #f8fbff;
+}
+
+.auth-social-btn svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.auth-social-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+
+.auth-social-facebook {
+  border-color: #c7d2fe;
+  background: #f8faff;
+}
+
 .auth-message {
   margin: 0.9rem 0 0;
   font-size: 0.9rem;
@@ -196,5 +263,9 @@
 
   .auth-hero-panel {
     min-height: 230px;
+  }
+
+  .auth-social-buttons {
+    grid-template-columns: 1fr;
   }
 }
