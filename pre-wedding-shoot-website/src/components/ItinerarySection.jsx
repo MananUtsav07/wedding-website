@@ -49,7 +49,7 @@ function ItinerarySection({ packages, sharedSlides }) {
         transition={{ duration: 0.55, ease: 'easeOut' }}
       >
         <p className="itinerary-eyebrow">Our Itinerary</p>
-        <h2>Our Itinerary</h2>
+        <h2>Your life, our lens, pure magic.</h2>
       </Motion.div>
 
       <div className="itinerary-grid">

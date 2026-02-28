@@ -143,6 +143,14 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .photographer-profile-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .photographer-profile-media img {
+    min-height: 220px;
+  }
+
   .booking-layout {
     grid-template-columns: 1fr;
   }
@@ -192,6 +200,16 @@
 
   .pros-cards-grid {
     grid-template-columns: 1fr;
+  }
+
+  .photographer-tabs {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .photographer-tab-btn {
+    width: 100%;
+    text-align: center;
   }
 
   .gallery-masonry {

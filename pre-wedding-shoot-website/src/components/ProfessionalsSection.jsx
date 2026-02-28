@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion as Motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { fetchProfessionalPhotoUrls } from '../api/mediaApi'
 import SafeImage from './SafeImage'
 
@@ -104,9 +105,9 @@ function ProfessionalsSection({ professionals }) {
               <h3>{pro.name}</h3>
               <p>{pro.type}</p>
               <div className="pro-location">{pro.locationLabel}</div>
-              <button type="button" className="pro-cta">
+              <Link to={`/professionals/${pro.id}`} className="pro-cta">
                 View Profile
-              </button>
+              </Link>
             </div>
           </Motion.article>
         ))}

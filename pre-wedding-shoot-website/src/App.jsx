@@ -7,6 +7,7 @@ import GalleryPage from './pages/GalleryPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import MyBookingsPage from './pages/MyBookingsPage'
+import PhotographerProfilePage from './pages/PhotographerProfilePage'
 import ProfessionalsPage from './pages/ProfessionalsPage'
 import UserAccountPage from './pages/UserAccountPage'
 
@@ -18,6 +19,7 @@ function App() {
         <Route element={<AppLayout />}>
           <Route index element={<HomePage />} />
           <Route path="professionals" element={<ProfessionalsPage />} />
+          <Route path="professionals/:professionalId" element={<PhotographerProfilePage />} />
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="gallery" element={<GalleryPage />} />
           <Route path="booking" element={<BookingPage />} />

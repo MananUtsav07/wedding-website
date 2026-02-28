@@ -12,7 +12,7 @@ const TIME_SLOT_OPTIONS = [
 ]
 
 const DELIVERABLE_OPTIONS = [
-  { id: 'still-imagery', label: 'Images' },
+  { id: 'still-imagery', label: 'Still Images' },
   { id: 'cinematic-video', label: 'Cinematic Video' },
   { id: 'hybrid-coverage', label: 'Images + Video' },
 ]
