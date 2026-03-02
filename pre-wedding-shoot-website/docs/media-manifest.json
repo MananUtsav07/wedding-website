@@ -1,0 +1,37 @@
+{
+  "location-shimla-cover": "Destinations/Himachal/shimla/1.png",
+  "location-dharamshala-cover": "Destinations/Himachal/dharamashala-cricket-stadium/1.png",
+  "location-mcleodganj-cover": "Destinations/Himachal/mcLoed-ganj/1.png",
+
+  "location-amritsar-cover": "Destinations/Punjab/amritsar/1.png",
+  "location-chandigarh-cover": "Destinations/Punjab/chandhigarh/1.png",
+  "location-jalandhar-cover": "Destinations/Punjab/jallandhar/1.png",
+  "location-ludhiana-cover": "Destinations/Punjab/ludhiana/1.png",
+
+  "location-srinagar-cover": "Destinations/Srinagar/dal-lake/1.png",
+  "location-gulmarg-cover": "Destinations/Srinagar/gulmarg/1.png",
+  "location-nishant-garden-cover": "Destinations/Srinagar/nishant-garden/1.png",
+  "location-shalimar-garden-cover": "Destinations/Srinagar/shalimar-garden/1.png",
+  "location-nehru-park-cover": "Destinations/Srinagar/nehru-park/1.png",
+    
+
+
+  "location-patnitop-cover": "Destinations/Jammu/patnitop/1.png",
+  "location-mansar-cover": "Destinations/Jammu/mansar/1.png",
+  "location-amar-mahal-cover": "Destinations/Jammu/amar-mahal/1.png",
+  "location-sanasar-cover": "Destinations/Jammu/sanasar/1.png",
+
+  "home-itinerary-pre-wedding": "Home- Itinerary/pre-wedding/1.png",
+  "home-itinerary-wedding": "Home- Itinerary/wedding/2.png",
+  "home-itinerary-post-wedding": "Home- Itinerary/post-wedding/3.png",
+
+  "gallery-shimla-1": "Destinations/Himachal/shimla/1.png",
+  "gallery-dharamshala-1": "Destinations/Himachal/dharamashala-cricket-stadium/1.png",
+  "gallery-amritsar-1": "Destinations/Punjab/amritsar/1.png",
+  "gallery-ludhiana-1": "Destinations/Punjab/ludhiana/1.png",
+  "gallery-jalandhar-1": "Destinations/Punjab/jallandhar/1.png",
+  "gallery-srinagar-1": "Destinations/Srinagar/dal-lake/1.png",
+  "gallery-patnitop-1": "Destinations/Jammu/patnitop/1.png",
+  "gallery-mansar-1": "Destinations/Jammu/mansar/1.png",
+  "gallery-sanasar-1": "Destinations/Jammu/sanasar/1.png"
+}

@@ -1,20 +1,22 @@
-// Centralized slideshow media keys for Home > Our Itinerary.
-// Replace these mediaKey values later when final couple photos are ready.
-export const itinerarySharedSlides = [
-  {
-    id: 'itinerary-dharamshala',
-    location: 'Dharamshala Cricket Stadium, Himachal Pradesh',
-    mediaKey: 'location-dharamshala-cover',
-  },
-  {
-    id: 'itinerary-patnitop',
-    location: 'Patnitop, Jammu & Kashmir',
-    mediaKey: 'location-patnitop-cover',
-  },
-  {
-    id: 'itinerary-amritsar',
-    location: 'Amritsar, Punjab',
-    mediaKey: 'location-amritsar-cover',
-  },
-]
-
+// Centralized per-package slideshow media keys for Home > Our Itinerary.
+// You can add multiple slides per package later.
+export const itinerarySlidesByPackage = {
+  'pre-wedding': [
+    {
+      id: 'itinerary-pre-wedding-1',
+      mediaKey: 'home-itinerary-pre-wedding',
+    },
+  ],
+  wedding: [
+    {
+      id: 'itinerary-wedding-1',
+      mediaKey: 'home-itinerary-wedding',
+    },
+  ],
+  'post-wedding': [
+    {
+      id: 'itinerary-post-wedding-1',
+      mediaKey: 'home-itinerary-post-wedding',
+    },
+  ],
+}

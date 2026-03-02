@@ -3,41 +3,67 @@ import { motion as Motion } from 'framer-motion'
 import { fetchItinerarySlidesWithUrls } from '../api/mediaApi'
 import SafeImage from './SafeImage'
 
-function ItinerarySection({ packages, sharedSlides }) {
-  const [slides, setSlides] = useState([])
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0)
+function ItinerarySection({ packages, slidesByPackage }) {
+  const [resolvedSlidesByPackage, setResolvedSlidesByPackage] = useState({})
+  const [activeSlideIndexes, setActiveSlideIndexes] = useState({})
 
   useEffect(() => {
     let isMounted = true
 
     const loadSlides = async () => {
-      const slidesWithImages = await fetchItinerarySlidesWithUrls(sharedSlides)
+      const packageEntries = Object.entries(slidesByPackage || {})
+      const resolvedEntries = await Promise.all(
+        packageEntries.map(async ([packageId, packageSlides]) => {
+          const safeSlides = Array.isArray(packageSlides) ? packageSlides : []
+          const slidesWithImages = await fetchItinerarySlidesWithUrls(safeSlides)
+          return [packageId, slidesWithImages]
+        }),
+      )
+
       if (!isMounted) {
         return
       }
-      setSlides(slidesWithImages)
-      setActiveSlideIndex(0)
+
+      const nextResolvedSlidesByPackage = Object.fromEntries(resolvedEntries)
+      const nextActiveIndexes = Object.fromEntries(
+        Object.keys(nextResolvedSlidesByPackage).map((packageId) => [packageId, 0]),
+      )
+
+      setResolvedSlidesByPackage(nextResolvedSlidesByPackage)
+      setActiveSlideIndexes(nextActiveIndexes)
     }
 
     loadSlides()
     return () => {
       isMounted = false
     }
-  }, [sharedSlides])
+  }, [slidesByPackage])
 
   useEffect(() => {
-    if (slides.length <= 1) {
+    const packageIds = Object.keys(resolvedSlidesByPackage)
+    if (!packageIds.length) {
       return undefined
     }
 
     const intervalId = window.setInterval(() => {
-      setActiveSlideIndex((currentIndex) => (currentIndex + 1) % slides.length)
+      setActiveSlideIndexes((currentIndexes) => {
+        const nextIndexes = { ...currentIndexes }
+
+        packageIds.forEach((packageId) => {
+          const packageSlides = resolvedSlidesByPackage[packageId] || []
+          if (packageSlides.length <= 1) {
+            return
+          }
+          const current = Number.isInteger(currentIndexes[packageId]) ? currentIndexes[packageId] : 0
+          nextIndexes[packageId] = (current + 1) % packageSlides.length
+        })
+
+        return nextIndexes
+      })
     }, 3600)
 
     return () => window.clearInterval(intervalId)
-  }, [slides.length])
-
-  const activeSlide = slides[activeSlideIndex]
+  }, [resolvedSlidesByPackage])
 
   return (
     <section className="section itinerary-section">
@@ -53,9 +79,17 @@ function ItinerarySection({ packages, sharedSlides }) {
       </Motion.div>
 
       <div className="itinerary-grid">
-        {packages.map((item, index) => (
+        {packages.map((item, index) => {
+          const packageId = item.id || `package-${index}`
+          const packageSlides = resolvedSlidesByPackage[packageId] || []
+          const activeSlideIndex = Number.isInteger(activeSlideIndexes[packageId])
+            ? activeSlideIndexes[packageId]
+            : 0
+          const activeSlide = packageSlides[activeSlideIndex]
+
+          return (
           <Motion.article
-            key={item.title}
+            key={packageId}
             className="itinerary-card"
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,38 +103,39 @@ function ItinerarySection({ packages, sharedSlides }) {
               {activeSlide ? (
                 <SafeImage
                   src={activeSlide.image}
-                  alt={`${item.title} couple setup at ${activeSlide.location}`}
+                  alt={`${item.title} slideshow image ${activeSlideIndex + 1}`}
                   className="itinerary-slide-image"
                 />
               ) : (
                 <div className="itinerary-slide-image itinerary-slide-loading">Loading slideshow...</div>
               )}
-
-              <figcaption className="itinerary-slide-caption">
-                {activeSlide ? activeSlide.location : 'Preparing slideshow'}
-              </figcaption>
             </figure>
 
-            {slides.length > 1 ? (
+            {packageSlides.length > 1 ? (
               <div className="itinerary-slide-dots" aria-label="Itinerary slideshow progress">
-                {slides.map((slide, slideIndex) => (
+                {packageSlides.map((slide, slideIndex) => (
                   <button
                     key={slide.id}
                     type="button"
                     className={`itinerary-slide-dot ${slideIndex === activeSlideIndex ? 'active' : ''}`}
-                    onClick={() => setActiveSlideIndex(slideIndex)}
-                    aria-label={`Show ${slide.location}`}
+                    onClick={() =>
+                      setActiveSlideIndexes((currentIndexes) => ({
+                        ...currentIndexes,
+                        [packageId]: slideIndex,
+                      }))
+                    }
+                    aria-label={`Show ${item.title} image ${slideIndex + 1}`}
                     aria-current={slideIndex === activeSlideIndex}
                   />
                 ))}
               </div>
             ) : null}
           </Motion.article>
-        ))}
+          )
+        })}
       </div>
     </section>
   )
 }
 
 export default ItinerarySection
-

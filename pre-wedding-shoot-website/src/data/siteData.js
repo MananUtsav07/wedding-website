@@ -7,11 +7,11 @@ export const locations = [
     coverMediaKey: 'location-patnitop-cover',
   },
   {
-    id: 'sansar',
-    name: 'Sansar, Jammu & Kashmir',
+    id: 'sanasar',
+    name: 'Sanasar, Jammu & Kashmir',
     vibe: 'Open valleys and rolling grasslands perfect for cinematic reels.',
-    popular: ['Sansar Meadow', 'Forest Ridge', 'Sunset Point'],
-    coverMediaKey: 'location-sansar-cover',
+    popular: ['Sanasar Meadow', 'Forest Ridge', 'Sunset Point'],
+    coverMediaKey: 'location-sanasar-cover',
   },
   {
     id: 'mansar',
@@ -75,6 +75,13 @@ export const locations = [
     vibe: 'Snow panoramas, meadows, and alpine romance.',
     popular: ['Gondola Base', 'Meadow Plains', 'Pine Slopes'],
     coverMediaKey: 'location-gulmarg-cover',
+  },
+  {
+    id: 'nehru-park',
+    name: 'Nehru Park, Srinagar',
+    vibe: 'Lakefront greens and serene city views for relaxed romantic portraits.',
+    popular: ['Lakefront Walk', 'Garden Lawns', 'Sunset Deck'],
+    coverMediaKey: 'location-nehru-park-cover',
   },
   {
     id: 'phalgam',
@@ -273,6 +280,11 @@ export const galleryShots = [
   },
   {
     title: 'sample',
+    location: 'Nehru Park, Srinagar',
+    mediaKey: 'location-nehru-park-cover',
+  },
+  {
+    title: 'sample',
     location: 'Phalgam, Srinagar',
     mediaKey: 'location-phalgam-cover',
   },
@@ -325,6 +337,7 @@ export const slotMap = {
   'Nishant Garden, Srinagar': ['08:00 AM', '11:30 AM', '04:30 PM'],
   'Shalimar Garden, Srinagar': ['08:15 AM', '12:15 PM', '04:45 PM'],
   'Gulmarg, Srinagar': ['07:00 AM', '11:00 AM', '03:45 PM'],
+  'Nehru Park, Srinagar': ['07:45 AM', '12:00 PM', '05:00 PM'],
   'Phalgam, Srinagar': ['07:30 AM', '11:30 AM', '04:00 PM'],
   'Shimla, Himachal Pradesh': ['07:00 AM', '10:30 AM', '03:30 PM'],
   'Dharamshala Cricket Stadium, Himachal Pradesh': ['07:00 AM', '11:00 AM', '04:00 PM'],
@@ -337,14 +350,17 @@ export const slotMap = {
 
 export const itineraryPackages = [
   {
+    id: 'pre-wedding',
     title: 'Pre Wedding Shoot',
     description: 'Concept planning, location curation, and cinematic couple photography.',
   },
   {
+    id: 'wedding',
     title: 'Wedding Shoot',
     description: 'Full wedding day coverage with candid, traditional, and ritual highlights.',
   },
   {
+    id: 'post-wedding',
     title: 'Post Wedding Shoot',
     description: 'Relaxed destination storytelling after the ceremony for timeless portraits.',
   },
@@ -359,7 +375,7 @@ export const destinationCatalog = [
   {
     state: 'Srinagar',
     city: 'Srinagar',
-    destinations: ['Dal Lake', 'Nishant Garden', 'Shalimar Garden', 'Gulmarg', 'Phalgam'],
+    destinations: ['Dal Lake', 'Nishant Garden', 'Shalimar Garden', 'Gulmarg', 'Nehru Park', 'Phalgam'],
   },
   {
     state: 'Himachal',
