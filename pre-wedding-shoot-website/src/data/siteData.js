@@ -230,8 +230,8 @@ export const galleryShots = [
   },
   {
     title: 'sample',
-    location: 'Sansar, Jammu & Kashmir',
-    mediaKey: 'location-sansar-cover',
+    location: 'Sanasar, Jammu & Kashmir',
+    mediaKey: 'location-sanasar-cover',
   },
   {
     title: 'sample',
@@ -327,7 +327,7 @@ export const galleryShots = [
 
 export const slotMap = {
   'Patnitop, Jammu & Kashmir': ['07:00 AM', '10:00 AM', '04:00 PM'],
-  'Sansar, Jammu & Kashmir': ['08:00 AM', '12:00 PM', '05:00 PM'],
+  'Sanasar, Jammu & Kashmir': ['08:00 AM', '12:00 PM', '05:00 PM'],
   'Mansar, Jammu & Kashmir': ['07:30 AM', '11:30 AM', '04:30 PM'],
   'Amar Mahal, Jammu & Kashmir': ['08:30 AM', '12:30 PM', '05:00 PM'],
   'Katra, Jammu & Kashmir': ['06:45 AM', '10:45 AM', '03:30 PM'],
@@ -370,7 +370,7 @@ export const destinationCatalog = [
   {
     state: 'Jammu',
     city: 'Jammu',
-    destinations: ['Patnitop', 'Sansar', 'Mansar', 'Amar Mahal', 'Katra', 'Chenab Rail Bridge Reasi', 'Kud'],
+    destinations: ['Patnitop', 'Sanasar', 'Mansar', 'Amar Mahal', 'Katra', 'Chenab Rail Bridge Reasi', 'Kud'],
   },
   {
     state: 'Srinagar',
