@@ -147,6 +147,10 @@
     grid-template-columns: 1fr;
   }
 
+  .photographer-profile-hero.with-side-panel {
+    grid-template-columns: 1fr;
+  }
+
   .photographer-profile-media img {
     min-height: 220px;
   }

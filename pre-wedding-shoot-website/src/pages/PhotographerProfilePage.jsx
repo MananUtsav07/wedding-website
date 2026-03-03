@@ -60,17 +60,32 @@ function PhotographerProfilePage() {
     return <Navigate to="/professionals" replace />
   }
 
+  const bookingUrl = `/booking?location=${encodeURIComponent(professional.locationLabel)}&photographer=${encodeURIComponent(professional.id)}`
+
+  const renderHeroSideContent = () => {
+    return (
+      <ul>
+        {profileDetails.services.map((service) => (
+          <li key={service}>{service}</li>
+        ))}
+      </ul>
+    )
+  }
+
+  const renderTabBookNow = () => (
+    <div className="photographer-tab-cta-wrap">
+      <Link className="photographer-tab-book-btn" to={bookingUrl}>
+        Book Now
+      </Link>
+    </div>
+  )
+
   const renderTabContent = () => {
     if (activeTab === 'services') {
       return (
         <div className="photographer-tab-content">
-          <h2>Services Provided by {professional.name}</h2>
-          <ul>
-            {profileDetails.services.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
           <PhotographerPricingGuide pricingGuide={pricingGuide} />
+          {renderTabBookNow()}
         </div>
       )
     }
@@ -80,6 +95,7 @@ function PhotographerProfilePage() {
         <div className="photographer-tab-content">
           <h2>Projects</h2>
           <p>No projects added yet.</p>
+          {renderTabBookNow()}
         </div>
       )
     }
@@ -92,6 +108,7 @@ function PhotographerProfilePage() {
           Based in {professional.locationLabel}, {professional.name} blends planning, location-aware composition,
           and couple-focused direction to keep the shoot smooth from start to final delivery.
         </p>
+        {renderTabBookNow()}
       </div>
     )
   }
@@ -104,7 +121,7 @@ function PhotographerProfilePage() {
         </Link>
 
         <Motion.div
-          className="photographer-profile-hero"
+          className="photographer-profile-hero with-side-panel"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35 }}
@@ -117,6 +134,7 @@ function PhotographerProfilePage() {
             <p className="photographer-profile-type">{professional.type}</p>
             <p className="photographer-profile-location">{professional.locationLabel}</p>
           </div>
+          <div className="photographer-profile-services-box">{renderHeroSideContent()}</div>
         </Motion.div>
 
         <div className="photographer-tabs" role="tablist" aria-label="Photographer Profile Tabs">

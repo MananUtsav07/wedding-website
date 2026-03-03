@@ -5,11 +5,6 @@ function PhotographerPricingGuide({ pricingGuide }) {
 
   return (
     <section className="photographer-pricing-guide" aria-label="Photography pricing guide">
-      <div className="photographer-pricing-header">
-        <h3>{pricingGuide.title}</h3>
-        <p>{pricingGuide.subtitle}</p>
-      </div>
-
       <div className="photographer-pricing-block">
         <h4>Base Daily Rates by Region & Service</h4>
         <div className="photographer-pricing-table-wrap">
@@ -96,4 +91,3 @@ function PhotographerPricingGuide({ pricingGuide }) {
 }
 
 export default PhotographerPricingGuide
-

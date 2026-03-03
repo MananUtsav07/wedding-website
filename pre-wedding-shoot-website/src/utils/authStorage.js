@@ -45,6 +45,18 @@ function ensureConfigured() {
   return false
 }
 
+function normalizeAuthError(error, fallback = 'Authentication request failed. Please try again.') {
+  const message = String(error?.message || '').toLowerCase()
+  if (
+    message.includes('failed to fetch') ||
+    message.includes('load failed') ||
+    message.includes('networkerror')
+  ) {
+    return 'Could not reach authentication server. Check internet, Supabase URL settings, and allowed site URLs.'
+  }
+  return error?.message || fallback
+}
+
 export async function createAccount({ fullName, email, password }) {
   if (!ensureConfigured()) {
     return {
@@ -53,16 +65,24 @@ export async function createAccount({ fullName, email, password }) {
     }
   }
 
-  const { data, error } = await supabase.auth.signUp({
-    email: email.trim().toLowerCase(),
-    password,
-    options: {
-      data: {
-        full_name: fullName.trim(),
+  let data
+  let error
+  try {
+    const response = await supabase.auth.signUp({
+      email: email.trim().toLowerCase(),
+      password,
+      options: {
+        data: {
+          full_name: fullName.trim(),
+        },
+        emailRedirectTo: `${APP_URL}/login`,
       },
-      emailRedirectTo: `${APP_URL}/login`,
-    },
-  })
+    })
+    data = response.data
+    error = response.error
+  } catch (caughtError) {
+    return { ok: false, message: normalizeAuthError(caughtError, 'Signup failed. Please try again.') }
+  }
 
   if (error) {
     return { ok: false, message: error.message }
@@ -88,10 +108,18 @@ export async function loginAccount({ email, password }) {
     }
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email.trim().toLowerCase(),
-    password,
-  })
+  let data
+  let error
+  try {
+    const response = await supabase.auth.signInWithPassword({
+      email: email.trim().toLowerCase(),
+      password,
+    })
+    data = response.data
+    error = response.error
+  } catch (caughtError) {
+    return { ok: false, message: normalizeAuthError(caughtError, 'Login failed. Please try again.') }
+  }
 
   if (error) {
     return { ok: false, message: error.message }
@@ -116,12 +144,18 @@ export async function loginWithSocial({ provider = 'google', redirectPath = '/' 
   const origin = window.location.origin.replace(/\/$/, '')
   const redirectTo = `${origin}${normalizeRedirectPath(redirectPath)}`
 
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo,
-    },
-  })
+  let error
+  try {
+    const response = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo,
+      },
+    })
+    error = response.error
+  } catch (caughtError) {
+    return { ok: false, message: normalizeAuthError(caughtError, 'Social login failed. Please try again.') }
+  }
 
   if (error) {
     return { ok: false, message: error.message }

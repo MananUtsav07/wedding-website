@@ -259,6 +259,11 @@
   align-items: center;
 }
 
+.photographer-profile-hero.with-side-panel {
+  grid-template-columns: minmax(220px, 280px) minmax(260px, 1fr) minmax(300px, 1.2fr);
+  align-items: stretch;
+}
+
 .photographer-profile-media {
   border-radius: 12px;
   overflow: hidden;
@@ -292,6 +297,30 @@
 .photographer-profile-location {
   margin: 0;
   color: #475569;
+}
+
+.photographer-profile-services-box {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+}
+
+.photographer-profile-services-box ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #334155;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.photographer-profile-services-box p {
+  margin: 0;
+  color: #334155;
+  line-height: 1.7;
 }
 
 .photographer-tabs {
@@ -344,27 +373,32 @@
   gap: 0.45rem;
 }
 
+.photographer-tab-cta-wrap {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.photographer-tab-book-btn {
+  border: 1px solid #1d4ed8;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #2563eb, #1d4ed8);
+  color: #fff;
+  text-decoration: none;
+  font: inherit;
+  font-weight: 700;
+  padding: 0.58rem 1.4rem;
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.photographer-tab-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 16px rgba(29, 78, 216, 0.23);
+}
+
 .photographer-pricing-guide {
-  margin-top: 1.25rem;
-  border-top: 1px solid #e5eaf4;
-  padding-top: 1rem;
   display: grid;
   gap: 1rem;
-}
-
-.photographer-pricing-header {
-  text-align: center;
-}
-
-.photographer-pricing-header h3 {
-  margin: 0;
-  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
-  color: #111827;
-}
-
-.photographer-pricing-header p {
-  margin: 0.35rem 0 0;
-  color: #64748b;
 }
 
 .photographer-pricing-block {
