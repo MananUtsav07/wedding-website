@@ -344,3 +344,75 @@
   gap: 0.45rem;
 }
 
+.photographer-pricing-guide {
+  margin-top: 1.25rem;
+  border-top: 1px solid #e5eaf4;
+  padding-top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.photographer-pricing-header {
+  text-align: center;
+}
+
+.photographer-pricing-header h3 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+  color: #111827;
+}
+
+.photographer-pricing-header p {
+  margin: 0.35rem 0 0;
+  color: #64748b;
+}
+
+.photographer-pricing-block {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.photographer-pricing-block h4 {
+  margin: 0;
+  font-size: 1.02rem;
+  color: #334155;
+  border-left: 4px solid #d4af37;
+  padding-left: 0.6rem;
+}
+
+.photographer-pricing-table-wrap {
+  border: 1px solid #dbe2ef;
+  border-radius: 10px;
+  overflow-x: auto;
+  background: #fff;
+}
+
+.photographer-pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.photographer-pricing-table th,
+.photographer-pricing-table td {
+  border-bottom: 1px solid #e8edf5;
+  text-align: left;
+  vertical-align: top;
+  padding: 0.8rem 0.75rem;
+  color: #334155;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.photographer-pricing-table thead th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.photographer-pricing-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+

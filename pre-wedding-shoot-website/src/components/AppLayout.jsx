@@ -5,7 +5,7 @@ import SiteFooter from './SiteFooter'
 
 const links = [
   { id: 'home', label: 'Home', path: '/' },
-  { id: 'photographers', label: 'Photographers', path: '/professionals' },
+  { id: 'photographers', label: 'Professionals', path: '/professionals' },
   { id: 'destinations', label: 'Destinations', path: '/destinations' },
   { id: 'gallery', label: 'Gallery', path: '/gallery' },
 ]

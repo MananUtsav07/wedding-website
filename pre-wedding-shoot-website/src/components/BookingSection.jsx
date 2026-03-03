@@ -1,5 +1,6 @@
 import { motion as Motion } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
+import { getPhotographerPricingGuide } from '../data/photographerPricing'
 
 const STANDARD_TIME_SLOTS = [
   { id: 'morning-glow', label: 'Morning Glow', time: '9:00 AM - 12:00 PM' },
@@ -74,10 +75,95 @@ function createDayPlan(baseLocation, baseDate = '', baseSlot = STANDARD_TIME_SLO
   }
 }
 
+function normalizeRegionToken(rawRegion) {
+  const value = (rawRegion || '').trim().toLowerCase()
+  if (!value) {
+    return ''
+  }
+  if (
+    value.includes('jammu & kashmir') ||
+    value.includes('jammu and kashmir') ||
+    value.includes('jammu') ||
+    value.includes('srinagar')
+  ) {
+    return 'jammu-kashmir'
+  }
+  if (value.includes('himachal')) {
+    return 'himachal'
+  }
+  if (value.includes('punjab')) {
+    return 'punjab'
+  }
+  return value
+}
+
+function extractRegionTokenFromLocation(locationName) {
+  const parts = String(locationName || '')
+    .split(',')
+    .map((part) => part.trim())
+    .filter(Boolean)
+  return normalizeRegionToken(parts[1] || parts[0] || '')
+}
+
+function extractCityToken(value) {
+  return String(value || '')
+    .split(',')[0]
+    .trim()
+    .toLowerCase()
+}
+
 function getRecommendedProfessional(locationName, professionals) {
-  const safeLocationName = typeof locationName === 'string' ? locationName : ''
-  const city = safeLocationName.split(',')[0].trim().toLowerCase()
-  return professionals.find((pro) => pro.city.toLowerCase() === city) ?? professionals[0]
+  const targetCity = extractCityToken(locationName)
+  const targetRegion = extractRegionTokenFromLocation(locationName)
+
+  const exactCitySameRegion = professionals.find(
+    (pro) => extractCityToken(pro.locationLabel) === targetCity && extractRegionTokenFromLocation(pro.locationLabel) === targetRegion,
+  )
+  if (exactCitySameRegion) {
+    return exactCitySameRegion
+  }
+
+  const sameRegion = professionals.find(
+    (pro) => extractRegionTokenFromLocation(pro.locationLabel) === targetRegion,
+  )
+  if (sameRegion) {
+    return sameRegion
+  }
+
+  const sameCity = professionals.find((pro) => extractCityToken(pro.locationLabel) === targetCity)
+  if (sameCity) {
+    return sameCity
+  }
+
+  return professionals[0]
+}
+
+function buildPackageOptionsForLocation(pricingGuide, locationName) {
+  const targetRegion = extractRegionTokenFromLocation(locationName)
+  const selectedRegionRates =
+    pricingGuide.baseDailyRates.find((row) => normalizeRegionToken(row.region) === targetRegion) ??
+    pricingGuide.baseDailyRates[0]
+
+  return [
+    {
+      id: 'photo-only',
+      label: 'Photo Only (Traditional & Candid)',
+      price: selectedRegionRates?.photoOnly ?? 'Custom',
+      perDayPrice: `${selectedRegionRates?.photoOnly ?? 'Custom'} per day`,
+    },
+    {
+      id: 'standard',
+      label: 'Standard (Photo + Video)',
+      price: selectedRegionRates?.standard ?? 'Custom',
+      perDayPrice: `${selectedRegionRates?.standard ?? 'Custom'} per day`,
+    },
+    {
+      id: 'premium',
+      label: 'Premium (Cinematic + Drone + Candid)',
+      price: selectedRegionRates?.premium ?? 'Custom',
+      perDayPrice: `${selectedRegionRates?.premium ?? 'Custom'} per day`,
+    },
+  ]
 }
 
 function BookingSection({ locations, professionals, onConfirm, initialLocation }) {
@@ -103,6 +189,10 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
   const [useSameOptions, setUseSameOptions] = useState(true)
   const [dayPlans, setDayPlans] = useState(() => [createDayPlan(defaultLocation)])
   const [otherTypingPlaceholder, setOtherTypingPlaceholder] = useState('')
+  const [pendingBookingDraft, setPendingBookingDraft] = useState(null)
+  const [selectedServicePackageId, setSelectedServicePackageId] = useState('')
+  const [servicePackageOptions, setServicePackageOptions] = useState([])
+  const [isPackageDialogOpen, setIsPackageDialogOpen] = useState(false)
   const primaryDayPlan = dayPlans[0] ?? createDayPlan(defaultLocation)
 
   const selectedPackage = useMemo(() => PACKAGE_MAP[form.packageType] ?? PACKAGE_MAP['pre-wedding'], [form.packageType])
@@ -113,6 +203,10 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
   const recommendedProfessional = useMemo(
     () => getRecommendedProfessional(primaryDayPlan.location, professionals),
     [primaryDayPlan.location, professionals],
+  )
+  const selectedServicePackage = useMemo(
+    () => servicePackageOptions.find((item) => item.id === selectedServicePackageId) ?? null,
+    [servicePackageOptions, selectedServicePackageId],
   )
 
   useEffect(() => {
@@ -172,8 +266,16 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
     })
   }, [shootDays, defaultLocation])
 
+  const resetPackageChooser = () => {
+    setPendingBookingDraft(null)
+    setServicePackageOptions([])
+    setSelectedServicePackageId('')
+    setIsPackageDialogOpen(false)
+  }
+
   const onChange = (event) => {
     const { name, value } = event.target
+    resetPackageChooser()
     setForm((prev) => {
       if (name === 'packageType') {
         return {
@@ -187,6 +289,7 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
   }
 
   const setDayDate = (dayIndex, value) => {
+    resetPackageChooser()
     setDayPlans((prev) => {
       const next = prev.map((day) => ({ ...day }))
       const previousPrimaryDate = prev[0]?.date || ''
@@ -211,6 +314,7 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
   }
 
   const setDayLocation = (dayIndex, value) => {
+    resetPackageChooser()
     setDayPlans((prev) => {
       const next = prev.map((day) => ({ ...day }))
       const previousPrimaryLocation = prev[0]?.location || defaultLocation
@@ -233,6 +337,7 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
   }
 
   const setDaySlot = (dayIndex, value) => {
+    resetPackageChooser()
     setDayPlans((prev) => {
       const next = prev.map((day) => ({ ...day }))
       next[dayIndex].slot = value
@@ -253,6 +358,7 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
 
   const onShootDaysChange = (event) => {
     const nextShootDays = clampBookingDays(event.target.value)
+    resetPackageChooser()
     setShootDays(nextShootDays)
     if (nextShootDays === 1) {
       setUseSameOptions(true)
@@ -261,6 +367,7 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
 
   const onToggleSameOptions = (event) => {
     const checked = event.target.checked
+    resetPackageChooser()
     setUseSameOptions(checked)
 
     if (!checked) {
@@ -285,10 +392,10 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
 
   const onSubmit = (event) => {
     event.preventDefault()
-    const selectedProfessional =
+    const assignedProfessional =
       form.photographer === 'recommended'
-        ? recommendedProfessional.name
-        : professionals.find((pro) => pro.id === form.photographer)?.name || 'Not selected'
+        ? recommendedProfessional
+        : professionals.find((pro) => pro.id === form.photographer) ?? recommendedProfessional
 
     const primaryDate = dayPlans[0]?.date || ''
     const primaryLocation = dayPlans[0]?.location || defaultLocation
@@ -305,8 +412,10 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
     })
 
     const firstDay = finalizedDayPlans[0]
+    const pricingGuide = getPhotographerPricingGuide(assignedProfessional.id)
+    const packageOptions = buildPackageOptionsForLocation(pricingGuide, firstDay.location)
 
-    onConfirm({
+    const draft = {
       ...form,
       location: firstDay.location,
       date: firstDay.date,
@@ -316,9 +425,28 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
       dayPlans: finalizedDayPlans,
       coupleName: `${form.partnerOne} & ${form.partnerTwo}`,
       packageType: selectedPackage.title,
-      selectedProfessional,
+      selectedProfessional: assignedProfessional.name,
+      selectedProfessionalId: assignedProfessional.id,
       bookingId: `PW-${Date.now().toString().slice(-6)}`,
+    }
+
+    setPendingBookingDraft(draft)
+    setServicePackageOptions(packageOptions)
+    setSelectedServicePackageId(packageOptions[0]?.id ?? '')
+    setIsPackageDialogOpen(true)
+  }
+
+  const onConfirmPackageSelection = () => {
+    if (!pendingBookingDraft || !selectedServicePackage) {
+      return
+    }
+
+    onConfirm({
+      ...pendingBookingDraft,
+      selectedServicePackage: selectedServicePackage.label,
+      selectedServicePrice: selectedServicePackage.perDayPrice,
     })
+    resetPackageChooser()
   }
 
   return (
@@ -553,7 +681,7 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
               </div>
             </div>
             <label>
-              Choose Package
+              Shoot Type
               <select name="packageType" value={form.packageType} onChange={onChange}>
                 <option value="pre-wedding">Pre Wedding Shoot</option>
                 <option value="wedding">Wedding Shoot</option>
@@ -590,10 +718,71 @@ function BookingSection({ locations, professionals, onConfirm, initialLocation }
           transition={{ duration: 0.4, delay: 0.15 }}
         >
           <Motion.button type="submit" className="summary-cta" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
-            Continue to Payment
+            Choose Package
           </Motion.button>
         </Motion.div>
       </form>
+
+      {isPackageDialogOpen && pendingBookingDraft && servicePackageOptions.length ? (
+        <Motion.div
+          className="booking-package-dialog-backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={resetPackageChooser}
+        >
+          <Motion.div
+            className="booking-package-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Choose service package"
+            initial={{ opacity: 0, y: 20, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.24 }}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h3>Select Service Package</h3>
+            <p>
+              Photographer: <strong>{pendingBookingDraft.selectedProfessional}</strong>
+            </p>
+            <p className="booking-package-dialog-note">
+              <strong>All prices shown below are per day.</strong>
+            </p>
+
+            <div className="booking-package-options" role="radiogroup" aria-label="Service package options">
+              {servicePackageOptions.map((option) => (
+                <label key={option.id} className="booking-package-option">
+                  <input
+                    type="radio"
+                    name="servicePackageChoice"
+                    value={option.id}
+                    checked={selectedServicePackageId === option.id}
+                    onChange={() => setSelectedServicePackageId(option.id)}
+                  />
+                  <span className="booking-package-option-label">{option.label}</span>
+                  <strong className="booking-package-option-price">{option.perDayPrice}</strong>
+                </label>
+              ))}
+            </div>
+
+            <div className="booking-package-dialog-actions">
+              <button type="button" className="booking-package-cancel-btn" onClick={resetPackageChooser}>
+                Cancel
+              </button>
+              <Motion.button
+                type="button"
+                className="summary-cta booking-package-confirm"
+                onClick={onConfirmPackageSelection}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Confirm Package
+              </Motion.button>
+            </div>
+          </Motion.div>
+        </Motion.div>
+      ) : null}
     </section>
   )
 }

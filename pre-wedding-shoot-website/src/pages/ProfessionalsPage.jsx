@@ -12,7 +12,7 @@ function ProfessionalsPage() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5 }}
         >
-          Our Professional Photographers
+          Our Professional Team
         </Motion.h1>
         <Motion.p
           initial={{ opacity: 0, y: 18 }}
@@ -20,7 +20,7 @@ function ProfessionalsPage() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.45, delay: 0.08 }}
         >
-          Capture your love story with the finest cinematic and traditional wedding photographers in
+          Capture your love story with the finest cinematic and traditional wedding professionals in
           the region, handpicked for their artistic vision and technical excellence.
         </Motion.p>
       </section>

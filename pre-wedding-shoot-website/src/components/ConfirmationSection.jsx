@@ -18,6 +18,12 @@ function ConfirmationSection({ confirmed }) {
         {confirmed.slot}. Payment method preference: {confirmed.paymentMethod}.
       </p>
       <p>Photographer: {confirmed.selectedProfessional || 'Recommended (auto assign)'}</p>
+      {confirmed.selectedServicePackage ? (
+        <p>
+          Service Package: <strong>{confirmed.selectedServicePackage}</strong>
+          {confirmed.selectedServicePrice ? ` (${confirmed.selectedServicePrice})` : ''}
+        </p>
+      ) : null}
     </Motion.section>
   )
 }

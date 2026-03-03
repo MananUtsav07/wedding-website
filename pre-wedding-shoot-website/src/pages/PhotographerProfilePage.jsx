@@ -2,7 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { motion as Motion } from 'framer-motion'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { fetchProfessionalPhotoUrls } from '../api/mediaApi'
+import PhotographerPricingGuide from '../components/PhotographerPricingGuide'
 import SafeImage from '../components/SafeImage'
+import { getPhotographerPricingGuide } from '../data/photographerPricing'
 import { defaultProfessionalProfile, professionalProfileDetails } from '../data/professionalProfiles'
 import { professionals } from '../data/siteData'
 
@@ -28,6 +30,8 @@ function PhotographerProfilePage() {
     }
     return professionalProfileDetails[professional.id] ?? defaultProfessionalProfile
   }, [professional])
+
+  const pricingGuide = useMemo(() => getPhotographerPricingGuide(professionalId), [professionalId])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -66,6 +70,7 @@ function PhotographerProfilePage() {
               <li key={item}>{item}</li>
             ))}
           </ul>
+          <PhotographerPricingGuide pricingGuide={pricingGuide} />
         </div>
       )
     }

@@ -212,6 +212,15 @@
     text-align: center;
   }
 
+  .photographer-pricing-guide {
+    margin-top: 1rem;
+    padding-top: 0.9rem;
+  }
+
+  .photographer-pricing-table {
+    min-width: 680px;
+  }
+
   .gallery-masonry {
     grid-template-columns: 1fr;
   }

@@ -17,7 +17,7 @@ function Hero() {
             <em>Timeless frames for every occasion</em>
           </h1>
           <p>
-            Handpicked photographers for your most cherished moments in breathtaking landscapes.
+            Handpicked professionals for your most cherished moments in breathtaking landscapes.
           </p>
           <Motion.div
             className="hero-actions"
