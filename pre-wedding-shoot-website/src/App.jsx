@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
+import AnalyticsTracker from './components/AnalyticsTracker'
 import AppLayout from './components/AppLayout'
 import BookingPage from './pages/BookingPage'
 import DestinationsPage from './pages/DestinationsPage'
@@ -14,6 +15,7 @@ import UserAccountPage from './pages/UserAccountPage'
 function App() {
   return (
     <BrowserRouter>
+      <AnalyticsTracker />
       <Routes>
         <Route path="login" element={<LoginPage />} />
         <Route element={<AppLayout />}>

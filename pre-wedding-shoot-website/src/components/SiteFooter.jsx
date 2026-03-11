@@ -30,8 +30,12 @@ function SiteFooter() {
 
         <section>
           <h4>Contact</h4>
-          <p>Email: hello@preandweddingshoot.com</p>
-          <p>Phone: +91 98XXXXXX12</p>
+          <p>
+            Email: <a href="mailto:preweddingshoots01@gmail.com">preweddingshoots01@gmail.com</a>
+          </p>
+          <p>
+            Phone: <a href="tel:+919419111953">+919419111953</a>
+          </p>
           <p>Hours: 9:00 AM - 7:00 PM</p>
         </section>
       </div>
